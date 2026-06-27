@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>さらちゃんのテスト分析</title>
-<meta name="robots" content="noindex,nofollow">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -140,7 +142,7 @@
     margin:14px auto 18px;gap:12px;
   }
   .rabbit-wrap{
-    position:relative;width:140px;height:210px;
+    position:relative;width:88px;height:132px;
     display:flex;align-items:flex-end;justify-content:center;
     overflow:visible;
   }
@@ -149,20 +151,28 @@
     transition:transform .15s ease-out;
   }
   .rabbit-bubble{
-    position:relative;background:#fff;color:var(--kdark);
-    padding:8px 14px;font-family:"DotGothic16",monospace;font-size:12px;
-    border:3px solid var(--kdark);box-shadow:var(--shadow-pixel-sm);
-    line-height:1.5;
+    position:relative;background:var(--kcard);color:var(--kyellow);
+    padding:14px 20px;font-family:"DotGothic16",monospace;font-size:22px;
+    border:3px solid var(--kyellow);box-shadow:var(--shadow-pixel);
+    line-height:1.4;letter-spacing:.04em;text-align:center;font-weight:400;
+    text-shadow:2px 2px 0 #000;
   }
+  .rabbit-bubble.big{font-size:26px;padding:18px 24px;letter-spacing:.06em}
+  .rabbit-bubble .pink{color:var(--kpink);text-shadow:2px 2px 0 #000}
+  .rabbit-bubble .white{color:#fff;text-shadow:2px 2px 0 #000}
   .rabbit-bubble::after{
     content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%);
-    width:0;height:0;border:6px solid transparent;
-    border-bottom-color:var(--kdark);
+    width:0;height:0;border:7px solid transparent;
+    border-bottom-color:var(--kyellow);
   }
   .rabbit-bubble::before{
     content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);
-    width:0;height:0;border:6px solid transparent;
-    border-bottom-color:#fff;z-index:1;
+    width:0;height:0;border:7px solid transparent;
+    border-bottom-color:var(--kcard);z-index:1;
+  }
+  @media (max-width:480px){
+    .rabbit-bubble{font-size:18px}
+    .rabbit-bubble.big{font-size:21px;padding:14px 18px}
   }
   /* star burst overlay */
   .star-burst{position:absolute;inset:0;pointer-events:none;overflow:visible}
@@ -211,6 +221,51 @@
   .rankbig .of{font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft);margin-left:auto}
 
   .pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+
+  /* ===== Roulette ===== */
+  .roul{
+    display:inline-block;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum";
+  }
+  .roul.spinning{
+    animation:pixel-blink .12s steps(2,end) infinite;
+    color:var(--kyellow);
+  }
+
+  /* ===== Girls rank highlight ===== */
+  .girls-rank{
+    margin-top:22px;padding:16px 14px 14px;text-align:center;
+    background:
+      repeating-linear-gradient(45deg,rgba(255,45,120,.1) 0 10px,transparent 10px 20px),
+      linear-gradient(160deg,rgba(168,85,247,.15),rgba(255,45,120,.15));
+    border:3px solid var(--kpink);
+    box-shadow:4px 4px 0 #000, 0 0 0 4px var(--kyellow), 7px 7px 0 4px #000;
+    position:relative;
+  }
+  .gr-eyebrow{
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:10.5px;
+    color:var(--kdark);background:var(--kyellow);
+    padding:3px 11px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+    letter-spacing:.16em;margin-bottom:8px;
+  }
+  .gr-lead{
+    font-family:"DotGothic16",monospace;font-size:13px;color:#fff;margin-bottom:4px;
+  }
+  .gr-bignum{
+    font-family:"DotGothic16",monospace;font-size:54px;line-height:1;
+    color:var(--kyellow);
+    text-shadow:3px 3px 0 var(--kpink),6px 6px 0 #000;
+    letter-spacing:.04em;margin:6px 0 8px;
+  }
+  .gr-bignum small{font-size:22px;margin-left:4px;color:#fff;text-shadow:2px 2px 0 #000}
+  .gr-foot{
+    font-family:"DotGothic16",monospace;font-size:12px;color:#fff;letter-spacing:.04em;
+  }
+  .gr-foot b{color:var(--kpink);font-weight:400;font-size:14px}
+  @media (max-width:480px){
+    .gr-bignum{font-size:46px}
+  }
 
   .strip{margin-top:24px}
   .strip-label{
@@ -530,9 +585,9 @@
     <div class="rabbit-stage">
       <div class="rabbit-wrap">
         <div class="star-burst" id="starBurst"></div>
-        <svg width="140" height="210" viewBox="0 0 16 24" id="rabbit-hero"></svg>
+        <svg width="88" height="132" viewBox="0 0 16 24" id="rabbit-hero"></svg>
       </div>
-      <div class="rabbit-bubble pixel-sm">がんばったね！けっかみてみよっ</div>
+      <div class="rabbit-bubble big"><span class="pink">がんばったね！</span><br>けっかみてみよっ</div>
     </div>
 
     <p class="who pixel-sm">三宿中学校　1年E組 12番　木村さら</p>
@@ -541,16 +596,24 @@
   <!-- HERO -->
   <div class="hero pixel-card-pink rise">
     <span class="hero-tag">▶ 9教科 合計</span>
-    <div class="bignum">728<span>点</span></div>
+    <div class="bignum"><span class="roul" data-target="728" data-duration="1800">000</span><span>点</span></div>
     <p class="sub">学年平均 <b>522.4点</b>　＋205.6点</p>
     <div class="rankbig">
       <span class="lab">想定順位</span>
-      <span class="num">約18<small>位</small></span>
+      <span class="num">約<span class="roul" data-target="18" data-duration="2200" data-pad="2">00</span><small>位</small></span>
       <span class="of">／ 約150人中</span>
     </div>
-    <p class="sub" style="margin-top:10px;font-family:'DotGothic16',monospace">
-      女子の中でみると <b>約7位</b>（女子59人中）
-    </p>
+
+    <!-- 女子内順位を強調 -->
+    <div class="girls-rank">
+      <span class="gr-eyebrow">★ FEMALE RANK ★</span>
+      <p class="gr-lead">女子の中でみると…</p>
+      <div class="gr-bignum">
+        約<span class="roul" data-target="7" data-duration="2600" data-pad="1">0</span><small>位</small>
+      </div>
+      <p class="gr-foot">女子<b>59人</b>中　＝　<b>上位 約12%</b></p>
+    </div>
+
     <div class="pillrow">
       <span class="pixel-chip pink">★ 上位 10〜13%</span>
       <span class="pixel-chip yellow">全教科 平均超え</span>
@@ -687,9 +750,9 @@
       <div class="rabbit-stage" style="margin-top:20px">
         <div class="rabbit-wrap">
           <div class="star-burst" id="starBurst2"></div>
-          <svg width="140" height="210" viewBox="0 0 16 24" id="rabbit-top10"></svg>
+          <svg width="96" height="144" viewBox="0 0 16 24" id="rabbit-top10"></svg>
         </div>
-        <div class="rabbit-bubble pixel-sm">めざせ TOP10！<br>おうえん してるよ〜🐰</div>
+        <div class="rabbit-bubble big"><span class="pink">めざせ TOP10！</span><br>おうえん してるよ〜🐰</div>
       </div>
     </div>
   </section>
@@ -886,6 +949,61 @@ function runDance(svgId, burstId, offset){
 }
 runDance('rabbit-hero',  'starBurst',  0);
 runDance('rabbit-top10', 'starBurst2', 5);
+
+/* =====================================================================
+   ROULETTE NUMBER ANIMATION
+   ===================================================================== */
+function startRoulette(el){
+  const target = parseInt(el.dataset.target, 10);
+  const duration = parseInt(el.dataset.duration || '1800', 10);
+  const pad = parseInt(el.dataset.pad || String(String(target).length), 10);
+  const start = performance.now();
+  el.classList.add('spinning');
+
+  function fmt(n){
+    return String(Math.max(0, Math.floor(n))).padStart(pad, '0');
+  }
+  function frame(now){
+    const t = Math.min(1, (now - start) / duration);
+    // ease-out cubic
+    const eased = 1 - Math.pow(1 - t, 3);
+    if(t < 0.65){
+      // rapid random spin in early phase
+      const range = target * 3 + 30;
+      el.textContent = fmt(Math.random() * range);
+    } else {
+      // ease toward target
+      const v = target * eased + (1-eased) * (target*1.4);
+      el.textContent = fmt(v);
+    }
+    if(t < 1){
+      requestAnimationFrame(frame);
+    } else {
+      el.textContent = fmt(target);
+      el.classList.remove('spinning');
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+(function(){
+  const targets = document.querySelectorAll('.roul');
+  // start when in view
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting && !e.target.dataset.spun){
+          e.target.dataset.spun = '1';
+          startRoulette(e.target);
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:0.4});
+    targets.forEach(t=>io.observe(t));
+  } else {
+    targets.forEach(t=>startRoulette(t));
+  }
+})();
 
 /* ---- Static rabbits ---- */
 staticRabbit('rabbit-closing','wink');
