@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>さらちゃんのテスト分析</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kpink:#FF2D78;
+    --kpink-deep:#C8195A;
+    --kpurple:#A855F7;
+    --kyellow:#FDE047;
+    --kgreen:#10B981;
+    --kblue:#60A5FA;
+    --kdark:#0f0f23;
+    --kdark2:#15153a;
+    --kcard:#1a1a3e;
+    --kcard2:#222252;
+    --kborder:#4a4a6a;
+    --kink:#f0e9ff;
+    --kink-soft:#a5a0c8;
+    --shadow-pixel:4px 4px 0 #000;
+    --shadow-pixel-lg:6px 6px 0 #000;
+    --shadow-pixel-sm:2px 2px 0 #000;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Zen Kaku Gothic New",system-ui,sans-serif;
+    background:var(--kdark);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255,45,120,.12) 0, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(168,85,247,.12) 0, transparent 45%),
+      radial-gradient(circle at 50% 95%, rgba(253,224,71,.08) 0, transparent 40%);
+    background-attachment:fixed;
+    color:var(--kink);
+    line-height:1.75;
+    letter-spacing:.02em;
+    padding-bottom:48px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{max-width:620px;margin:0 auto;padding:0 16px}
+  .pixel{font-family:"DotGothic16",monospace;letter-spacing:.04em;text-shadow:2px 2px 0 rgba(0,0,0,.7)}
+  .pixel-sm{font-family:"DotGothic16",monospace;letter-spacing:.04em}
+
+  /* ===== Pixel base styles ===== */
+  .pixel-card{
+    background:var(--kcard);
+    border:3px solid #fff;
+    box-shadow:var(--shadow-pixel);
+    border-radius:0;
+  }
+  .pixel-card-pink{
+    background:var(--kcard);
+    border:3px solid var(--kpink);
+    box-shadow:var(--shadow-pixel);
+    border-radius:0;
+  }
+  .pixel-card-yellow{
+    background:var(--kcard);
+    border:3px solid var(--kyellow);
+    box-shadow:var(--shadow-pixel);
+    border-radius:0;
+  }
+  .pixel-card-purple{
+    background:var(--kcard);
+    border:3px solid var(--kpurple);
+    box-shadow:var(--shadow-pixel);
+    border-radius:0;
+  }
+  .pixel-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:5px 12px;font-family:"DotGothic16",monospace;
+    font-size:11px;font-weight:700;border:2px solid #fff;
+    box-shadow:var(--shadow-pixel-sm);background:var(--kcard);
+    color:#fff;letter-spacing:.06em;
+  }
+  .pixel-chip.pink{border-color:var(--kpink);color:var(--kpink);background:rgba(255,45,120,.12)}
+  .pixel-chip.purple{border-color:var(--kpurple);color:var(--kpurple);background:rgba(168,85,247,.12)}
+  .pixel-chip.yellow{border-color:var(--kyellow);color:var(--kyellow);background:rgba(253,224,71,.1)}
+  .pixel-chip.green{border-color:var(--kgreen);color:var(--kgreen);background:rgba(16,185,129,.1)}
+  .pixel-chip.blue{border-color:var(--kblue);color:var(--kblue);background:rgba(96,165,250,.1)}
+
+  /* ===== Animations ===== */
+  @keyframes pixel-blink{0%,100%{opacity:1}50%{opacity:.45}}
+  @keyframes pixel-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  @keyframes pixel-sparkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes star-pop{0%{opacity:0;transform:scale(0) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(180deg)}100%{opacity:0;transform:scale(.4) rotate(360deg)}}
+  @keyframes rabbit-dance{0%,100%{transform:translateY(0) rotate(-3deg)}25%{transform:translateY(-4px) rotate(5deg)}50%{transform:translateY(-2px) rotate(-2deg)}75%{transform:translateY(-6px) rotate(4deg)}}
+  @keyframes rabbit-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  .blink{animation:pixel-blink 1s steps(2,end) infinite}
+  .float{animation:pixel-float 3s ease-in-out infinite}
+  .rise{animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
+  .dance-rabbit{animation:rabbit-dance 1.2s ease-in-out infinite}
+  .hop-rabbit{animation:rabbit-hop 1.8s ease-in-out infinite}
+
+  /* ===== Header ===== */
+  header{padding:34px 0 12px;text-align:center;position:relative}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kpurple);letter-spacing:.18em;
+  }
+  .eyebrow::before,.eyebrow::after{content:"★";color:var(--kyellow);font-size:10px}
+  header h1{
+    font-family:"DotGothic16",monospace;font-weight:400;font-size:30px;
+    margin-top:14px;letter-spacing:.05em;
+    color:#fff;
+    text-shadow:3px 3px 0 var(--kpink),6px 6px 0 rgba(0,0,0,.8);
+    line-height:1.3;
+  }
+  header h1 .pink{color:var(--kpink);text-shadow:3px 3px 0 #000}
+  .who{
+    font-family:"DotGothic16",monospace;font-size:11.5px;
+    color:var(--kink-soft);margin-top:14px;letter-spacing:.06em;
+  }
+
+  /* Rabbit area */
+  .rabbit-stage{
+    position:relative;display:flex;justify-content:center;align-items:flex-end;
+    margin:6px auto 14px;gap:18px;
+  }
+  .rabbit-stage svg{display:block;image-rendering:pixelated;shape-rendering:crispEdges}
+  .rabbit-bubble{
+    position:relative;background:#fff;color:var(--kdark);
+    padding:9px 13px;font-family:"DotGothic16",monospace;font-size:12px;
+    border:3px solid var(--kdark);box-shadow:var(--shadow-pixel-sm);
+    margin-bottom:14px;line-height:1.5;max-width:170px;
+  }
+  .rabbit-bubble::after{
+    content:"";position:absolute;left:-13px;bottom:8px;
+    width:0;height:0;border:6px solid transparent;
+    border-right-color:var(--kdark);
+  }
+  .rabbit-bubble::before{
+    content:"";position:absolute;left:-7px;bottom:8px;
+    width:0;height:0;border:6px solid transparent;
+    border-right-color:#fff;z-index:1;
+  }
+
+  /* sparkle dots */
+  .sparkle{position:absolute;color:var(--kyellow);font-size:14px;animation:pixel-sparkle 2s steps(6) infinite}
+  .sparkle.s1{top:8%;left:8%}
+  .sparkle.s2{top:14%;right:10%;animation-delay:.4s}
+  .sparkle.s3{top:62%;left:5%;color:var(--kpink);animation-delay:.8s}
+  .sparkle.s4{top:50%;right:6%;color:var(--kpurple);animation-delay:1.2s}
+
+  /* ===== Hero ===== */
+  .hero{
+    margin-top:22px;padding:24px 20px 22px;position:relative;
+  }
+  .hero-tag{
+    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kpink);
+    letter-spacing:.12em;
+  }
+  .bignum{
+    font-family:"DotGothic16",monospace;font-weight:400;
+    font-size:74px;line-height:.95;margin:4px 0 4px;
+    color:var(--kyellow);
+    text-shadow:4px 4px 0 var(--kpink),8px 8px 0 rgba(0,0,0,.7);
+    letter-spacing:.02em;
+  }
+  .bignum span{font-size:24px;margin-left:6px;color:#fff;text-shadow:2px 2px 0 #000}
+  .hero .sub{font-size:13px;color:var(--kink-soft);font-family:"DotGothic16",monospace}
+  .hero .sub b{color:var(--kyellow);font-weight:400}
+
+  .rankbig{
+    display:flex;align-items:baseline;gap:10px;margin-top:18px;
+    padding:14px 16px;background:linear-gradient(135deg,rgba(255,45,120,.2),rgba(168,85,247,.2));
+    border:3px solid var(--kpink);box-shadow:var(--shadow-pixel-sm);
+  }
+  .rankbig .lab{font-family:"DotGothic16",monospace;font-size:11px;font-weight:700;color:var(--kpink);letter-spacing:.1em}
+  .rankbig .num{font-family:"DotGothic16",monospace;font-size:30px;color:#fff;line-height:1;text-shadow:2px 2px 0 var(--kpink-deep)}
+  .rankbig .num small{font-size:14px;margin-left:2px;color:var(--kink)}
+  .rankbig .of{font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft);margin-left:auto}
+
+  .pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+
+  .strip{margin-top:24px}
+  .strip-label{
+    font-family:"DotGothic16",monospace;font-size:10.5px;
+    color:var(--kink-soft);margin-bottom:10px;
+    display:flex;justify-content:space-between;letter-spacing:.05em;
+  }
+  .track{display:flex;align-items:flex-end;gap:4px;height:60px}
+  .seg{flex:1;background:var(--kpurple);border:2px solid #fff;border-bottom:0;position:relative;image-rendering:pixelated}
+  .seg.me{background:var(--kpink);box-shadow:0 0 12px rgba(255,45,120,.7)}
+  .seg .flag{
+    position:absolute;top:-26px;left:50%;transform:translateX(-50%);
+    font-family:"DotGothic16",monospace;font-size:10px;font-weight:700;
+    color:#fff;background:var(--kpink);padding:3px 7px;
+    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+    white-space:nowrap;
+  }
+  .axis{display:flex;justify-content:space-between;font-family:"DotGothic16",monospace;font-size:10px;color:var(--kink-soft);margin-top:8px;letter-spacing:.05em}
+
+  /* ===== Section heading ===== */
+  section{margin-top:38px}
+  .sec-head{
+    display:flex;align-items:baseline;gap:10px;margin-bottom:6px;padding-left:4px;
+  }
+  .sec-head h2{
+    font-family:"DotGothic16",monospace;font-weight:400;font-size:20px;
+    letter-spacing:.04em;color:#fff;
+    text-shadow:2px 2px 0 var(--kpurple);
+  }
+  .sec-head h2::before{content:"▸ ";color:var(--kyellow)}
+  .sec-head .en{font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);letter-spacing:.18em;text-transform:uppercase}
+  .sec-note{font-size:12.5px;color:var(--kink-soft);margin:4px 0 16px;padding-left:4px;font-family:"DotGothic16",monospace;line-height:1.7}
+  .sec-note b{color:var(--kpink);font-weight:400}
+
+  .legend{
+    display:flex;gap:14px;font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kink-soft);margin:0 0 14px;padding-left:4px;flex-wrap:wrap;letter-spacing:.04em;
+  }
+  .legend i{display:inline-block;width:11px;height:11px;border:2px solid #fff;margin-right:5px;vertical-align:-1px}
+
+  /* ===== Subject card ===== */
+  .card{
+    padding:16px 16px 14px;margin-bottom:14px;
+    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
+  }
+  .c-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .c-name{
+    font-family:"DotGothic16",monospace;font-size:16px;color:#fff;
+    text-shadow:2px 2px 0 var(--kpurple);
+  }
+  .c-rank{
+    font-family:"DotGothic16",monospace;font-size:10.5px;font-weight:700;
+    color:var(--kpink);background:rgba(255,45,120,.15);
+    padding:4px 10px;border:2px solid var(--kpink);white-space:nowrap;letter-spacing:.05em;
+  }
+  .c-rank.mid{color:var(--kyellow);background:rgba(253,224,71,.12);border-color:var(--kyellow)}
+  .c-rank.soft{color:var(--kink-soft);background:rgba(255,255,255,.05);border-color:var(--kborder)}
+  .c-score{display:flex;align-items:baseline;gap:10px;margin:6px 0 12px;flex-wrap:wrap}
+  .c-score .pt{
+    font-family:"DotGothic16",monospace;font-size:30px;line-height:1;color:var(--kyellow);
+    text-shadow:2px 2px 0 var(--kpink),4px 4px 0 #000;
+  }
+  .c-score .pt small{font-size:13px;margin-left:2px;color:#fff;text-shadow:1px 1px 0 #000}
+  .c-score .avg{font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft)}
+  .c-score .gap{font-family:"DotGothic16",monospace;font-size:11px;font-weight:700;color:var(--kgreen)}
+  .c-score .srank{
+    margin-left:auto;font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kpink);background:rgba(255,45,120,.15);
+    padding:4px 9px;border:2px solid var(--kpink);white-space:nowrap;
+  }
+
+  .mini{position:relative}
+  .mbars{display:flex;align-items:flex-end;gap:3px;height:54px;position:relative;z-index:1}
+  .mbars .b{flex:1;background:var(--kpurple);border:1.5px solid #fff;border-bottom:0;min-height:3px}
+  .mbars .b.me{background:var(--kpink);box-shadow:0 0 10px rgba(255,45,120,.6)}
+  .avgline{position:absolute;top:-4px;bottom:18px;width:0;border-left:2px dashed var(--kblue);z-index:2}
+  .avgline span{
+    position:absolute;top:-4px;left:5px;font-family:"DotGothic16",monospace;
+    font-size:9.5px;color:var(--kblue);white-space:nowrap;font-weight:700;
+  }
+  .mfoot{display:flex;justify-content:space-between;font-family:"DotGothic16",monospace;font-size:9.5px;color:var(--kink-soft);margin-top:6px;letter-spacing:.05em}
+
+  /* ===== Analysis blocks ===== */
+  .ana{
+    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
+    padding:4px 4px;
+  }
+  .item{display:flex;gap:14px;padding:16px 14px;border-bottom:2px dashed var(--kborder)}
+  .item:last-child{border-bottom:0}
+  .ic{
+    width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-family:"DotGothic16",monospace;font-size:16px;color:#fff;
+    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+  }
+  .ic.g{background:var(--kgreen)}
+  .ic.r{background:var(--kpink)}
+  .ic.b{background:var(--kpurple)}
+  .item h3{
+    font-family:"DotGothic16",monospace;font-size:14.5px;color:#fff;margin-bottom:4px;
+    text-shadow:1px 1px 0 var(--kpurple);
+  }
+  .item p{font-size:13px;color:var(--kink);line-height:1.75;font-family:"DotGothic16",monospace}
+  .item .em{color:var(--kyellow);font-weight:700}
+
+  /* ===== Closing ===== */
+  .closing{
+    background:linear-gradient(160deg,var(--kcard),var(--kcard2));
+    border:3px solid var(--kyellow);
+    box-shadow:var(--shadow-pixel-lg);
+    padding:24px 22px;position:relative;
+  }
+  .closing h2{
+    font-family:"DotGothic16",monospace;font-size:18px;margin-bottom:10px;
+    color:var(--kyellow);text-shadow:2px 2px 0 var(--kpink);
+  }
+  .closing p{font-family:"DotGothic16",monospace;font-size:13.5px;color:var(--kink);line-height:1.9}
+  .closing p b{color:var(--kpink);font-weight:400}
+  .closing .sig{margin-top:16px;font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft);text-align:right}
+  .closing-rabbit{position:absolute;right:14px;top:-32px}
+
+  .foot{
+    font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);
+    line-height:1.8;margin-top:28px;text-align:center;
+  }
+  .foot b{color:var(--kink)}
+
+  /* ===== Gender section ===== */
+  .gcard{
+    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
+    padding:14px 16px;margin-bottom:12px;
+  }
+  .g-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .g-name{font-family:"DotGothic16",monospace;font-size:15px;color:#fff;text-shadow:1.5px 1.5px 0 var(--kpurple)}
+  .g-lead{
+    font-family:"DotGothic16",monospace;font-size:10.5px;font-weight:700;
+    padding:4px 10px;white-space:nowrap;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+  }
+  .g-lead.f{background:var(--kpink);color:#fff;border-color:#fff}
+  .g-lead.m{background:var(--kblue);color:#fff;border-color:#fff}
+  .dbar{position:relative;height:14px;background:var(--kdark2);border:2px solid #fff;margin:6px 0 12px}
+  .dcenter{position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--kyellow);transform:translateX(-50%);z-index:2}
+  .dfill{position:absolute;top:0;bottom:0;z-index:1}
+  .dfill.f{background:var(--kpink)}
+  .dfill.m{background:var(--kblue)}
+  .g-stats{display:flex;gap:6px;flex-wrap:wrap;font-family:"DotGothic16",monospace;font-size:11.5px}
+  .g-stats .chip{padding:3px 9px;font-weight:700;background:var(--kdark2);border:2px solid var(--kborder);color:#fff}
+  .g-stats .chip.m{color:var(--kblue);border-color:var(--kblue)}
+  .g-stats .chip.f{color:var(--kpink);border-color:var(--kpink)}
+  .g-stats .chip.s{background:rgba(253,224,71,.14);color:var(--kyellow);border-color:var(--kyellow)}
+
+  /* ===== Floating rabbits ===== */
+  .float-rabbit{position:fixed;pointer-events:none;z-index:5;opacity:.85}
+  .float-rabbit.fr1{bottom:24px;left:16px}
+  .float-rabbit.fr2{top:120px;right:14px}
+  @media (max-width:520px){
+    .float-rabbit.fr2{display:none}
+  }
+
+  /* misc */
+  @media (prefers-reduced-motion:no-preference){
+    .hero,.card,.ana,.closing,.gcard{animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
+  }
+</style>
+</head>
+<body>
+
+<!-- floating rabbits (decorative) -->
+<div class="float-rabbit fr1 hop-rabbit" aria-hidden="true">
+  <svg width="56" height="84" viewBox="0 0 16 24" id="float-rabbit-template"></svg>
+</div>
+<div class="float-rabbit fr2 float" aria-hidden="true">
+  <svg width="48" height="72" viewBox="0 0 16 24" id="float-rabbit-template2"></svg>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <span class="sparkle s1">✦</span>
+    <span class="sparkle s2">✧</span>
+    <span class="sparkle s3">✦</span>
+    <span class="sparkle s4">✧</span>
+    <span class="eyebrow">REIWA 8 - 1ST TERM FINAL</span>
+    <h1>さらちゃんの<br><span class="pink">テスト分析</span></h1>
+
+    <div class="rabbit-stage">
+      <div class="rabbit-bubble pixel-sm">
+        がんばったね！<br>けっかみてみよっ
+      </div>
+      <svg width="84" height="126" viewBox="0 0 16 24" id="rabbit-hero" class="dance-rabbit"></svg>
+    </div>
+
+    <p class="who pixel-sm">三宿中学校　1年E組 12番　木村さら</p>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero pixel-card-pink rise">
+    <span class="hero-tag">▶ 9教科 合計</span>
+    <div class="bignum">728<span>点</span></div>
+    <p class="sub">学年平均 <b>522.4点</b>　＋205.6点</p>
+    <div class="rankbig">
+      <span class="lab">想定順位</span>
+      <span class="num">約18<small>位</small></span>
+      <span class="of">／ 約150人中</span>
+    </div>
+    <p class="sub" style="margin-top:10px;font-family:'DotGothic16',monospace">
+      女子の中でみると <b>約7位</b>（女子59人中）
+    </p>
+    <div class="pillrow">
+      <span class="pixel-chip pink">★ 上位 10〜13%</span>
+      <span class="pixel-chip yellow">全教科 平均超え</span>
+      <span class="pixel-chip purple">推定 15〜20位</span>
+    </div>
+
+    <div class="strip">
+      <div class="strip-label"><span>合計点の人数分布</span><span>さらの位置 →</span></div>
+      <div class="track" id="totalTrack"></div>
+      <div class="axis"><span>0点</span><span>450点</span><span>900点</span></div>
+    </div>
+  </div>
+
+  <!-- 教科別 -->
+  <section>
+    <div class="sec-head"><h2>教科ごとの結果</h2><span class="en">SUBJECTS</span></div>
+    <p class="sec-note">点数と、学年の中での位置。グラフは学年全体の人数分布で、<b>ピンク</b>がさらのいる帯です。</p>
+    <div class="legend">
+      <span><i style="background:var(--kpink)"></i>さらの位置</span>
+      <span><i style="background:var(--kpurple)"></i>学年全体（人数）</span>
+      <span><i style="background:var(--kblue)"></i>学年平均</span>
+    </div>
+    <div id="subjects"></div>
+  </section>
+
+  <!-- まとめ位置 -->
+  <section>
+    <div class="sec-head"><h2>合計でみた位置</h2><span class="en">TOTALS</span></div>
+    <p class="sec-note">3教科・5教科・9教科それぞれの合計でも、上位グループにバッチリ。</p>
+    <div id="totals"></div>
+  </section>
+
+  <!-- 男子女子 -->
+  <section>
+    <div class="sec-head"><h2>男子と女子で見ると</h2><span class="en">BOYS / GIRLS</span></div>
+    <p class="sec-note">この学年は <b>男子92人・女子59人</b>。教科ごとの男女平均差を比べました。さらは<b>女子の中での順位</b>もチェック。</p>
+    <div class="legend">
+      <span><i style="background:var(--kblue)"></i>男子の平均が上</span>
+      <span><i style="background:var(--kpink)"></i>女子の平均が上</span>
+      <span>棒＝平均点の差</span>
+    </div>
+    <div id="gender"></div>
+  </section>
+
+  <!-- 良いところ -->
+  <section>
+    <div class="sec-head"><h2>ここがすごい！</h2><span class="en">STRENGTHS</span></div>
+    <div class="ana">
+      <div class="item">
+        <div class="ic g">★</div>
+        <div><h3>言語の力がとても高い</h3>
+        <p>国語<span class="em">86点（上位約9%）</span>と外国語<span class="em">91点（最上位の帯）</span>。読む・書く・覚えるが武器。社会も、学年平均が43.7点と低い中で72点としっかり取れていて、文系の安定感バツグン。</p></div>
+      </div>
+      <div class="item">
+        <div class="ic g">★</div>
+        <div><h3>実技教科が光ってる</h3>
+        <p>美術<span class="em">83点（上位約6%）</span>と保健体育<span class="em">87点（上位約10%）</span>が学年トップクラス。内申は実技も主要教科と同じ重み。この強さは大きな武器になります。</p></div>
+      </div>
+      <div class="item">
+        <div class="ic g">★</div>
+        <div><h3>穴のないバランス型</h3>
+        <p>9教科すべてで学年平均を超えてる。苦手で大きく沈む教科がないのは、コツコツ準備できている証拠。合計728点で学年上位に入れている一番の理由です。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- これから -->
+  <section>
+    <div class="sec-head"><h2>これから伸ばせるところ</h2><span class="en">NEXT</span></div>
+    <div class="ana">
+      <div class="item">
+        <div class="ic r">1</div>
+        <div><h3>数学 — いちばん伸びしろ</h3>
+        <p>77点で平均超えですが、5教科の中では順位がやや控えめ（<span class="em">上位約38%</span>）。70点台に42人がひしめいていて、<span class="em">あと数問で順位が一気に上がる</span>帯にいる。計算ミスや解き直しを丁寧にやると効率よく伸びます。</p></div>
+      </div>
+      <div class="item">
+        <div class="ic b">2</div>
+        <div><h3>理科 — 高得点だけど上が厚い</h3>
+        <p>87点は立派。ただ理科は学年全体の平均も高く（72.2点）、90点台が35人と上位が厚い教科。<span class="em">難しい応用問題への対応</span>が、ここから一段上がるカギ。</p></div>
+      </div>
+      <div class="item">
+        <div class="ic b">3</div>
+        <div><h3>技術・家庭 — 底上げのチャンス</h3>
+        <p>66点で、9教科のなかで平均との差がいちばん小さい教科。実技や提出物の比重も大きいので、<span class="em">提出と実技を丁寧に</span>こなすだけで、総合点（内申）の底上げにつながります。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 総評 -->
+  <section>
+    <div class="closing">
+      <div class="closing-rabbit">
+        <svg width="56" height="84" viewBox="0 0 16 24" id="rabbit-closing" class="hop-rabbit"></svg>
+      </div>
+      <h2>★ そうひょう ★</h2>
+      <p>言語と実技という、伸ばしやすくて将来にもつながる力をしっかり持ってる。全教科で平均超え＆合計で学年上位というのは、地道に積み重ねてきた結果！　胸を張っていい成績です。<br><br>次に向けては、<b>数学の取りこぼしをへらす</b>のが一番のねらいどころ。得意な国語・外国語はこのまま伸ばし、技術家庭の提出物を丁寧に。これだけで合計順位はもう一段上がります。よく頑張りました🌱</p>
+      <p class="sig">— テスト結果より</p>
+    </div>
+  </section>
+
+  <p class="foot">
+    ※ 学校からは正式な順位は出ていません。<br>
+    「想定 約◯位」「上位◯%」「女子内 約◯位」は、<b>配布された人数分布グラフから推定した目安</b>です。<br>
+    （学年 約150人＝男子92人・女子59人）<br>
+    実際の順位とは数番前後する場合があります。
+  </p>
+
+</div>
+
+<script>
+/* =====================================================================
+   PIXEL RABBIT  (16x24 sprite based on eiken-pre2-drill Rabbit)
+   ===================================================================== */
+const RABBIT_COLORS = {
+  1:'#d4a574', 3:'#f5a0b5', 4:'#1a1a1a', 5:'#ffffff',
+  6:'#a06040', 7:'#ffb6c1', 8:'#f5ead6', 9:'#c47a7a'
+};
+const RABBIT_BASE = [
+  [0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],
+  [0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,0],
+  [0,0,0,1,3,3,1,0,0,1,3,3,1,0,0,0],
+  [0,0,0,1,3,3,1,0,0,1,3,3,1,0,0,0],
+  [0,0,0,1,3,3,1,0,0,1,3,3,1,0,0,0],
+  [0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,0],
+  [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
+  [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
+  [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+  [0,0,1,4,4,4,1,1,1,1,4,4,4,1,0,0],
+  [0,0,1,4,4,5,1,1,1,1,4,4,5,1,0,0],
+  [0,0,1,4,4,4,1,1,1,1,4,4,4,1,0,0],
+  [0,0,1,1,1,1,1,6,6,1,1,1,1,1,0,0],
+  [0,0,7,7,1,1,1,1,1,1,1,1,7,7,0,0],
+  [0,0,1,1,1,1,1,9,9,1,1,1,1,1,0,0],
+  [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
+  [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
+  [0,0,0,1,1,8,8,8,8,8,8,1,1,0,0,0],
+  [0,0,1,1,8,8,8,8,8,8,8,8,1,1,0,0],
+  [0,0,1,1,8,8,8,8,8,8,8,8,1,1,0,0],
+  [0,0,0,1,1,8,8,8,8,8,8,1,1,0,0,0],
+  [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
+  [0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],
+  [0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0]
+];
+function cheerFace(s){
+  s[9]  = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
+  s[10] = [0,0,1,4,1,4,1,1,1,4,1,4,1,1,0,0];
+  s[11] = [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0];
+}
+function winkFace(s){
+  s[9]  = [0,0,1,1,4,1,1,1,1,1,4,4,4,1,0,0];
+  s[10] = [0,0,1,4,1,4,1,1,1,1,4,4,5,1,0,0];
+  s[11] = [0,0,1,1,1,1,1,1,1,1,4,4,4,1,0,0];
+}
+function bothArms(s){
+  s[15][13]=1; s[15][2]=1;
+  s[14][14]=1; s[14][1]=1;
+  s[13][15]=1; s[13][0]=1;
+}
+function renderRabbit(svgId, mood){
+  const svg = document.getElementById(svgId);
+  if(!svg) return;
+  const sprite = RABBIT_BASE.map(r=>[...r]);
+  if(mood==='cheer'){cheerFace(sprite); bothArms(sprite);}
+  else if(mood==='wink'){winkFace(sprite);}
+  else if(mood==='happy'){/* default */}
+  let parts = '';
+  sprite.forEach((row,y)=>{
+    row.forEach((c,x)=>{
+      if(c>0) parts += `<rect x="${x}" y="${y}" width="1" height="1" fill="${RABBIT_COLORS[c]}"/>`;
+    });
+  });
+  svg.innerHTML = parts;
+}
+renderRabbit('rabbit-hero','cheer');
+renderRabbit('rabbit-closing','wink');
+renderRabbit('float-rabbit-template','happy');
+renderRabbit('float-rabbit-template2','cheer');
+
+/* =====================================================================
+   DATA
+   ===================================================================== */
+const subjects = [
+  {name:"国語",   score:86, avg:58.5, totals:[4,10,10,21,29,31,24,16,6],  me:7, avgBand:4, rank:"上位約9%",  srank:"約11位", cls:""},
+  {name:"数学",   score:77, avg:63.4, totals:[9,8,8,16,17,15,42,14,22],   me:6, avgBand:5, rank:"上位約38%", srank:"約45位", cls:"soft"},
+  {name:"外国語", score:91, avg:65.6, totals:[6,5,9,14,15,27,28,26,21],   me:8, avgBand:5, rank:"最上位の帯", srank:"約19位", cls:""},
+  {name:"社会",   score:72, avg:43.7, totals:[34,15,18,24,14,18,11,16,1], me:6, avgBand:3, rank:"上位約15%", srank:"約26位", cls:""},
+  {name:"理科",   score:87, avg:72.2, totals:[5,4,9,9,9,14,32,34,35],     me:7, avgBand:6, rank:"上位約34%", srank:"約43位", cls:"mid"},
+  {name:"音楽",   score:79, avg:50.4, totals:[18,18,22,17,16,17,19,16,8], me:6, avgBand:4, rank:"上位約22%", srank:"約26位", cls:"mid"},
+  {name:"美術",   score:83, avg:53.7, totals:[5,6,31,22,21,34,17,13,2],   me:7, avgBand:4, rank:"上位約6%",  srank:"約11位", cls:""},
+  {name:"保健体育",score:87, avg:66.0, totals:[1,3,5,12,24,38,38,29,1],    me:7, avgBand:5, rank:"上位約10%", srank:"約8位",  cls:""},
+  {name:"技術・家庭",score:66,avg:48.8,totals:[10,10,25,32,31,26,8,8,1],  me:5, avgBand:3, rank:"上位約20%", srank:"約26位", cls:"mid"},
+];
+
+/* ---- hero total strip ---- */
+const totalDist = [5,11,19,27,37,29,20,3];
+const totalMe = 6;
+(function(){
+  const max = Math.max(...totalDist);
+  const t = document.getElementById('totalTrack');
+  totalDist.forEach((v,i)=>{
+    const s = document.createElement('div');
+    s.className = 'seg' + (i===totalMe?' me':'');
+    s.style.height = (12 + v/max*46) + 'px';
+    if(i===totalMe){ s.innerHTML = '<span class="flag">さら 728</span>'; }
+    t.appendChild(s);
+  });
+})();
+
+/* ---- subject cards ---- */
+(function(){
+  const root = document.getElementById('subjects');
+  subjects.forEach(s=>{
+    const max = Math.max(...s.totals);
+    const gap = (s.score - s.avg).toFixed(1);
+    let bars = '';
+    s.totals.forEach((v,i)=>{
+      const h = (v/max*100);
+      bars += `<div class="b${i===s.me?' me':''}" style="height:${Math.max(h,4)}%"></div>`;
+    });
+    const leftPct = ((s.avgBand + 0.5) / 9) * 100;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="c-top">
+        <span class="c-name">${s.name}</span>
+        <span class="c-rank ${s.cls}">${s.rank}</span>
+      </div>
+      <div class="c-score">
+        <span class="pt">${s.score}<small>点</small></span>
+        <span class="avg">平均 ${s.avg}</span>
+        <span class="gap">＋${gap}</span>
+        <span class="srank">想定 ${s.srank}</span>
+      </div>
+      <div class="mini">
+        <div class="mbars">${bars}
+          <div class="avgline" style="left:${leftPct}%"><span>平均</span></div>
+        </div>
+        <div class="mfoot"><span>0点</span><span>100点</span></div>
+      </div>`;
+    root.appendChild(card);
+  });
+})();
+
+/* ---- totals ---- */
+const totalsData = [
+  {name:"3教科 合計", note:"国語・数学・外国語", score:254, avg:187.5, rank:"想定 約20位", grank:"約8位", dist:[10,3,13,7,19,29,28,20,14,8], me:8},
+  {name:"5教科 合計", note:"＋社会・理科",       score:413, avg:303.4, rank:"想定 約22位", grank:"約8位", dist:[6,8,11,16,27,30,25,22,6],    me:7},
+  {name:"9教科 合計", note:"すべての教科",       score:728, avg:522.4, rank:"想定 約18位", grank:"約7位", dist:[5,11,19,27,37,29,20,3],      me:6},
+];
+(function(){
+  const root = document.getElementById('totals');
+  totalsData.forEach(s=>{
+    const max = Math.max(...s.dist);
+    const gap = (s.score - s.avg).toFixed(1);
+    let bars='';
+    s.dist.forEach((v,i)=>{
+      const h=(v/max*100);
+      bars += `<div class="b${i===s.me?' me':''}" style="height:${Math.max(h,4)}%"></div>`;
+    });
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <div class="c-top">
+        <span class="c-name">${s.name}<span style="font-size:10.5px;color:var(--kink-soft);margin-left:6px">${s.note}</span></span>
+        <span class="c-rank">${s.rank}</span>
+      </div>
+      <div class="c-score">
+        <span class="pt">${s.score}<small>点</small></span>
+        <span class="avg">平均 ${s.avg}</span>
+        <span class="gap">＋${gap}</span>
+        <span class="srank">女子内 ${s.grank}</span>
+      </div>
+      <div class="mini"><div class="mbars">${bars}</div></div>`;
+    root.appendChild(card);
+  });
+})();
+
+/* ---- gender ---- */
+const gender = [
+  {n:"国語",   m:56, f:62, gap:6,  lead:"f", s:86, gr:"約6位"},
+  {n:"数学",   m:65, f:60, gap:5,  lead:"m", s:77, gr:"約14位"},
+  {n:"外国語", m:64, f:69, gap:5,  lead:"f", s:91, gr:"約9位"},
+  {n:"社会",   m:46, f:40, gap:6,  lead:"m", s:72, gr:"約10位"},
+  {n:"理科",   m:73, f:70, gap:2,  lead:"m", s:87, gr:"約14位"},
+  {n:"音楽",   m:46, f:57, gap:11, lead:"f", s:79, gr:"約14位"},
+  {n:"美術",   m:51, f:59, gap:8,  lead:"f", s:83, gr:"約6位"},
+  {n:"保健体育",m:65, f:67, gap:1,  lead:"f", s:87, gr:"約3位"},
+  {n:"技術・家庭",m:48,f:50, gap:2,  lead:"f", s:66, gr:"約10位"},
+];
+(function(){
+  const maxGap = 11;
+  const root = document.getElementById('gender');
+  gender.forEach(g=>{
+    const w = Math.max(Math.abs(g.gap)/maxGap*50, 4);
+    const fill = g.lead==='f'
+      ? `<div class="dfill f" style="left:50%;width:${w}%"></div>`
+      : `<div class="dfill m" style="right:50%;width:${w}%"></div>`;
+    const lead = g.lead==='f'
+      ? `<span class="g-lead f">女子が +${g.gap}</span>`
+      : `<span class="g-lead m">男子が +${g.gap}</span>`;
+    const card = document.createElement('div');
+    card.className = 'gcard';
+    card.innerHTML = `
+      <div class="g-top"><span class="g-name">${g.n}</span>${lead}</div>
+      <div class="dbar"><div class="dcenter"></div>${fill}</div>
+      <div class="g-stats">
+        <span class="chip m">男子 ${g.m}</span>
+        <span class="chip f">女子 ${g.f}</span>
+        <span class="chip s">さら ${g.s}点・女子内 ${g.gr}</span>
+      </div>`;
+    root.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>
