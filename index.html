@@ -136,25 +136,42 @@
 
   /* Rabbit area */
   .rabbit-stage{
-    position:relative;display:flex;justify-content:center;align-items:flex-end;
-    margin:6px auto 14px;gap:18px;
+    position:relative;display:flex;flex-direction:column;align-items:center;
+    margin:14px auto 18px;gap:12px;
+  }
+  .rabbit-wrap{
+    position:relative;width:140px;height:210px;
+    display:flex;align-items:flex-end;justify-content:center;
+    overflow:visible;
   }
   .rabbit-stage svg{display:block;image-rendering:pixelated;shape-rendering:crispEdges}
+  #rabbit-hero{
+    transition:transform .15s ease-out;
+  }
   .rabbit-bubble{
     position:relative;background:#fff;color:var(--kdark);
-    padding:9px 13px;font-family:"DotGothic16",monospace;font-size:12px;
+    padding:8px 14px;font-family:"DotGothic16",monospace;font-size:12px;
     border:3px solid var(--kdark);box-shadow:var(--shadow-pixel-sm);
-    margin-bottom:14px;line-height:1.5;max-width:170px;
+    line-height:1.5;
   }
   .rabbit-bubble::after{
-    content:"";position:absolute;left:-13px;bottom:8px;
+    content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%);
     width:0;height:0;border:6px solid transparent;
-    border-right-color:var(--kdark);
+    border-bottom-color:var(--kdark);
   }
   .rabbit-bubble::before{
-    content:"";position:absolute;left:-7px;bottom:8px;
+    content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);
     width:0;height:0;border:6px solid transparent;
-    border-right-color:#fff;z-index:1;
+    border-bottom-color:#fff;z-index:1;
+  }
+  /* star burst overlay */
+  .star-burst{position:absolute;inset:0;pointer-events:none;overflow:visible}
+  .star-burst .s{position:absolute;left:50%;top:42%;image-rendering:pixelated;shape-rendering:crispEdges}
+  @keyframes star-pop2{
+    0%{opacity:0;transform:scale(0) rotate(0deg) translate(0,0)}
+    25%{opacity:1;transform:scale(1.6) rotate(90deg) translate(var(--sx),var(--sy))}
+    50%{opacity:1;transform:scale(1) rotate(180deg) translate(var(--sx),var(--sy))}
+    100%{opacity:0;transform:scale(.3) rotate(360deg) translate(calc(var(--sx)*2),calc(var(--sy)*2))}
   }
 
   /* sparkle dots */
@@ -413,10 +430,11 @@
     <h1>さらちゃんの<br><span class="pink">テスト分析</span></h1>
 
     <div class="rabbit-stage">
-      <div class="rabbit-bubble pixel-sm">
-        がんばったね！<br>けっかみてみよっ
+      <div class="rabbit-wrap">
+        <div class="star-burst" id="starBurst"></div>
+        <svg width="140" height="210" viewBox="0 0 16 24" id="rabbit-hero"></svg>
       </div>
-      <svg width="84" height="126" viewBox="0 0 16 24" id="rabbit-hero" class="dance-rabbit"></svg>
+      <div class="rabbit-bubble pixel-sm">がんばったね！けっかみてみよっ</div>
     </div>
 
     <p class="who pixel-sm">三宿中学校　1年E組 12番　木村さら</p>
@@ -578,40 +596,157 @@ const RABBIT_BASE = [
   [0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],
   [0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0]
 ];
-function cheerFace(s){
-  s[9]  = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
-  s[10] = [0,0,1,4,1,4,1,1,1,4,1,4,1,1,0,0];
-  s[11] = [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0];
+function applyFace(s, face){
+  if(face==='cheer'){
+    s[9]  = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
+    s[10] = [0,0,1,4,1,4,1,1,1,4,1,4,1,1,0,0];
+    s[11] = [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0];
+  } else if(face==='wink'){
+    s[9]  = [0,0,1,1,4,1,1,1,1,1,4,4,4,1,0,0];
+    s[10] = [0,0,1,4,1,4,1,1,1,1,4,4,5,1,0,0];
+    s[11] = [0,0,1,1,1,1,1,1,1,1,4,4,4,1,0,0];
+  } else if(face==='excited'){
+    s[9]  = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
+    s[10] = [0,0,1,4,1,4,1,1,1,4,1,4,1,1,0,0];
+    s[11] = [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0];
+    s[14] = [0,0,1,1,1,9,9,9,9,9,9,1,1,1,0,0];
+  } else if(face==='angry'){
+    s[9]  = [0,0,1,4,1,1,1,1,1,1,1,1,4,1,0,0];
+    s[10] = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
+    s[11] = [0,0,1,1,1,4,1,1,1,1,4,1,1,1,0,0];
+    s[14] = [0,0,1,1,1,1,9,9,9,9,1,1,1,1,0,0];
+  }
 }
-function winkFace(s){
-  s[9]  = [0,0,1,1,4,1,1,1,1,1,4,4,4,1,0,0];
-  s[10] = [0,0,1,4,1,4,1,1,1,1,4,4,5,1,0,0];
-  s[11] = [0,0,1,1,1,1,1,1,1,1,4,4,4,1,0,0];
+function applyPose(s, pose){
+  if(pose==='base') return s;
+  switch(pose){
+    case 'rightArm':
+      s[15][13]=1; s[14][14]=1; s[13][15]=1; break;
+    case 'leftArm':
+      s[15][2]=1; s[14][1]=1; s[13][0]=1; break;
+    case 'bothArms':
+      s[15][13]=1; s[15][2]=1;
+      s[14][14]=1; s[14][1]=1;
+      s[13][15]=1; s[13][0]=1;
+      s[22]=[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0];
+      s[23]=[0,0,0,0,1,1,1,0,0,1,1,1,0,0,0,0];
+      break;
+    case 'rightKick':
+      s[22]=[0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0];
+      s[23]=[0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0]; break;
+    case 'leftKick':
+      s[22]=[0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0];
+      s[23]=[0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0]; break;
+    case 'stepRight':
+      s[22]=[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0];
+      s[23]=[0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0]; break;
+    case 'stepLeft':
+      s[22]=[0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0];
+      s[23]=[0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0]; break;
+    case 'crouch':
+      s[22]=[0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0];
+      s[23]=[0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0]; break;
+    case 'spin':
+      for(let y=0;y<s.length;y++) s[y].reverse();
+      break;
+  }
+  return s;
 }
-function bothArms(s){
-  s[15][13]=1; s[15][2]=1;
-  s[14][14]=1; s[14][1]=1;
-  s[13][15]=1; s[13][0]=1;
+function spriteToSVG(svg, sprite){
+  let p='';
+  sprite.forEach((row,y)=>row.forEach((c,x)=>{
+    if(c>0) p += `<rect x="${x}" y="${y}" width="1" height="1" fill="${RABBIT_COLORS[c]}"/>`;
+  }));
+  svg.innerHTML = p;
 }
-function renderRabbit(svgId, mood){
-  const svg = document.getElementById(svgId);
-  if(!svg) return;
-  const sprite = RABBIT_BASE.map(r=>[...r]);
-  if(mood==='cheer'){cheerFace(sprite); bothArms(sprite);}
-  else if(mood==='wink'){winkFace(sprite);}
-  else if(mood==='happy'){/* default */}
-  let parts = '';
-  sprite.forEach((row,y)=>{
-    row.forEach((c,x)=>{
-      if(c>0) parts += `<rect x="${x}" y="${y}" width="1" height="1" fill="${RABBIT_COLORS[c]}"/>`;
-    });
+function staticRabbit(svgId, mood){
+  const svg=document.getElementById(svgId); if(!svg) return;
+  const s=RABBIT_BASE.map(r=>[...r]);
+  if(mood==='cheer'){applyFace(s,'cheer'); applyPose(s,'bothArms');}
+  else if(mood==='wink'){applyFace(s,'wink');}
+  spriteToSVG(svg,s);
+}
+
+/* ---- Dance sequence (ported from eiken-pre2-drill Rabbit.tsx) ---- */
+const DANCE_SEQUENCE = [
+  {pose:'rightArm', face:'wink',    t:'translateY(-4px) rotate(4deg)'},
+  {pose:'leftArm',  face:'wink',    t:'translateY(-4px) rotate(-4deg)'},
+  {pose:'stepRight',face:'cheer',   t:'translateY(0px) rotate(3deg)'},
+  {pose:'stepLeft', face:'cheer',   t:'translateY(0px) rotate(-3deg)'},
+  {pose:'crouch',   face:'excited', t:'translateY(4px) rotate(0deg)'},
+  {pose:'bothArms', face:'excited', t:'translateY(-12px) rotate(0deg)'},
+  {pose:'base',     face:'cheer',   t:'translateY(2px) rotate(0deg)'},
+  {pose:'rightKick',face:'cheer',   t:'translateY(0px) rotate(5deg)'},
+  {pose:'leftKick', face:'cheer',   t:'translateY(0px) rotate(-5deg)'},
+  {pose:'bothArms', face:'excited', t:'translateY(-6px) rotate(0deg)'},
+  {pose:'spin',     face:'cheer',   t:'translateY(-2px) scaleX(-1)'},
+  {pose:'base',     face:'excited', t:'translateY(0px) rotate(0deg)'}
+];
+const SPIN_STARS = [
+  {x:-60,y:-50,dx:-12,dy:-10,color:'#FF2D78',s:10},
+  {x: 65,y:-40,dx: 14,dy: -8,color:'#A855F7',s: 8},
+  {x:-55,y: 40,dx:-10,dy: 12,color:'#FDE047',s:10},
+  {x: 58,y: 48,dx: 12,dy: 10,color:'#FF2D78',s: 8},
+  {x:-70,y:  5,dx:-14,dy:  0,color:'#A855F7',s:12},
+  {x: 72,y: -8,dx: 14,dy: -4,color:'#FDE047',s:10},
+  {x:  6,y:-58,dx:  0,dy:-14,color:'#FF2D78',s: 8},
+  {x:-10,y: 55,dx: -4,dy: 14,color:'#A855F7',s:12}
+];
+const STAR_PIXELS = [
+  [0,0,1,0,0],
+  [0,1,1,1,0],
+  [1,1,1,1,1],
+  [0,1,1,1,0],
+  [0,0,1,0,0]
+];
+function pixelStar(size,color){
+  let p='';
+  STAR_PIXELS.forEach((r,y)=>r.forEach((c,x)=>{
+    if(c) p += `<rect x="${x}" y="${y}" width="1" height="1" fill="${color}"/>`;
+  }));
+  return `<svg width="${size}" height="${size}" viewBox="0 0 5 5" style="display:block">${p}</svg>`;
+}
+function burstStars(){
+  const root = document.getElementById('starBurst');
+  if(!root) return;
+  root.innerHTML = '';
+  SPIN_STARS.forEach((star,i)=>{
+    const d = document.createElement('div');
+    d.className = 's';
+    d.style.marginLeft = star.x + 'px';
+    d.style.marginTop  = star.y + 'px';
+    d.style.setProperty('--sx', star.dx + 'px');
+    d.style.setProperty('--sy', star.dy + 'px');
+    d.style.animation = `star-pop2 .7s ease-out ${i*0.04}s both`;
+    d.innerHTML = pixelStar(star.s, star.color);
+    root.appendChild(d);
   });
-  svg.innerHTML = parts;
+  setTimeout(()=>{ root.innerHTML=''; }, 900);
 }
-renderRabbit('rabbit-hero','cheer');
-renderRabbit('rabbit-closing','wink');
-renderRabbit('float-rabbit-template','happy');
-renderRabbit('float-rabbit-template2','cheer');
+
+/* ---- Run hero rabbit dance ---- */
+(function(){
+  const svg = document.getElementById('rabbit-hero');
+  if(!svg) return;
+  let i = 0;
+  function tick(){
+    const frame = DANCE_SEQUENCE[i];
+    const s = RABBIT_BASE.map(r=>[...r]);
+    applyFace(s, frame.face);
+    applyPose(s, frame.pose);
+    spriteToSVG(svg, s);
+    svg.style.transform = frame.t;
+    if(frame.pose === 'spin') burstStars();
+    i = (i + 1) % DANCE_SEQUENCE.length;
+  }
+  tick();
+  setInterval(tick, 250);
+})();
+
+/* ---- Static rabbits ---- */
+staticRabbit('rabbit-closing','wink');
+staticRabbit('float-rabbit-template','happy');
+staticRabbit('float-rabbit-template2','cheer');
 
 /* =====================================================================
    BGM
