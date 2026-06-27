@@ -93,12 +93,25 @@
   @keyframes star-pop{0%{opacity:0;transform:scale(0) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(180deg)}100%{opacity:0;transform:scale(.4) rotate(360deg)}}
   @keyframes rabbit-dance{0%,100%{transform:translateY(0) rotate(-3deg)}25%{transform:translateY(-4px) rotate(5deg)}50%{transform:translateY(-2px) rotate(-2deg)}75%{transform:translateY(-6px) rotate(4deg)}}
   @keyframes rabbit-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes rabbit-spin{
+    0%{transform:translateY(0) rotateY(0deg) scale(1)}
+    25%{transform:translateY(-8px) rotateY(180deg) scale(.95)}
+    50%{transform:translateY(-12px) rotateY(360deg) scale(1)}
+    75%{transform:translateY(-8px) rotateY(540deg) scale(.95)}
+    100%{transform:translateY(0) rotateY(720deg) scale(1)}
+  }
+  @keyframes rabbit-spin-z{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+  }
 
   .blink{animation:pixel-blink 1s steps(2,end) infinite}
   .float{animation:pixel-float 3s ease-in-out infinite}
   .rise{animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
-  .dance-rabbit{animation:rabbit-dance 1.2s ease-in-out infinite}
-  .hop-rabbit{animation:rabbit-hop 1.8s ease-in-out infinite}
+  .dance-rabbit{animation:rabbit-spin 2.4s ease-in-out infinite;transform-style:preserve-3d}
+  .hop-rabbit{animation:rabbit-spin-z 3s linear infinite}
+  .spin3d{animation:rabbit-spin 2.4s ease-in-out infinite;transform-style:preserve-3d}
+  .spin2d{animation:rabbit-spin-z 3.6s linear infinite}
 
   /* ===== Header ===== */
   header{padding:34px 0 12px;text-align:center;position:relative}
@@ -339,6 +352,31 @@
     .float-rabbit.fr2{display:none}
   }
 
+  /* ===== BGM toggle button ===== */
+  .bgm-btn{
+    position:fixed;top:14px;right:14px;z-index:50;
+    width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
+    cursor:pointer;font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kyellow);padding:0;letter-spacing:.04em;
+    transition:transform .05s,box-shadow .05s;
+  }
+  .bgm-btn:active{transform:translate(2px,2px);box-shadow:var(--shadow-pixel-sm)}
+  .bgm-btn.on{border-color:var(--kpink);color:var(--kpink)}
+  .bgm-btn svg{display:block;shape-rendering:crispEdges}
+  .bgm-btn .label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--kink-soft);white-space:nowrap}
+  .bgm-hint{
+    position:fixed;top:68px;right:14px;z-index:50;
+    background:#fff;color:var(--kdark);
+    padding:6px 10px;font-family:"DotGothic16",monospace;font-size:10.5px;
+    border:2px solid var(--kdark);box-shadow:var(--shadow-pixel-sm);
+    animation:pixel-blink 1.4s steps(2,end) infinite;
+  }
+  .bgm-hint::after{
+    content:"";position:absolute;top:-7px;right:14px;
+    width:0;height:0;border:6px solid transparent;border-bottom-color:var(--kdark);
+  }
+
   /* misc */
   @media (prefers-reduced-motion:no-preference){
     .hero,.card,.ana,.closing,.gcard{animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
@@ -347,12 +385,21 @@
 </head>
 <body>
 
+<!-- BGM toggle -->
+<button id="bgmBtn" class="bgm-btn" aria-label="BGM ON/OFF">
+  <svg viewBox="0 0 7 8" width="22" height="24">
+    <g id="bgmNote"></g>
+  </svg>
+</button>
+<div id="bgmHint" class="bgm-hint">タップでBGM ♪</div>
+<audio id="bgmAudio" src="bgm/chopsticks.mp3" loop preload="auto"></audio>
+
 <!-- floating rabbits (decorative) -->
-<div class="float-rabbit fr1 hop-rabbit" aria-hidden="true">
-  <svg width="56" height="84" viewBox="0 0 16 24" id="float-rabbit-template"></svg>
+<div class="float-rabbit fr1" aria-hidden="true">
+  <svg width="56" height="84" viewBox="0 0 16 24" id="float-rabbit-template" class="spin2d"></svg>
 </div>
-<div class="float-rabbit fr2 float" aria-hidden="true">
-  <svg width="48" height="72" viewBox="0 0 16 24" id="float-rabbit-template2"></svg>
+<div class="float-rabbit fr2" aria-hidden="true">
+  <svg width="48" height="72" viewBox="0 0 16 24" id="float-rabbit-template2" class="spin3d"></svg>
 </div>
 
 <div class="wrap">
@@ -565,6 +612,85 @@ renderRabbit('rabbit-hero','cheer');
 renderRabbit('rabbit-closing','wink');
 renderRabbit('float-rabbit-template','happy');
 renderRabbit('float-rabbit-template2','cheer');
+
+/* =====================================================================
+   BGM
+   ===================================================================== */
+(function(){
+  const audio = document.getElementById('bgmAudio');
+  const btn   = document.getElementById('bgmBtn');
+  const hint  = document.getElementById('bgmHint');
+  const noteG = document.getElementById('bgmNote');
+  audio.volume = 0.3;
+
+  // 8-bit music note (7x8)
+  const NOTE_ON = [
+    [0,0,0,0,1,1,0],
+    [0,0,0,1,1,1,0],
+    [0,0,0,1,0,0,0],
+    [0,0,0,1,0,0,0],
+    [0,0,0,1,0,0,0],
+    [0,0,0,1,0,0,0],
+    [0,1,1,1,0,0,0],
+    [0,1,1,0,0,0,0]
+  ];
+  const NOTE_OFF_EXTRA = [
+    [1,0,0,0,0,0,0],
+    [0,1,0,0,0,0,0],
+    [0,0,1,0,0,0,0],
+    [0,0,0,0,0,0,0],
+    [0,0,1,0,0,0,0],
+    [0,1,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [0,0,0,0,0,0,1]
+  ];
+  function drawNote(on){
+    let p = '';
+    NOTE_ON.forEach((r,y)=>r.forEach((c,x)=>{
+      if(c) p += `<rect x="${x}" y="${y}" width="1" height="1" fill="${on?'#FF2D78':'#6b7280'}"/>`;
+    }));
+    if(!on){
+      NOTE_OFF_EXTRA.forEach((r,y)=>r.forEach((c,x)=>{
+        if(c) p += `<rect x="${x}" y="${y}" width="1" height="1" fill="#EF4444"/>`;
+      }));
+    }
+    noteG.innerHTML = p;
+  }
+
+  const STORAGE = 'sara_bgm_on';
+  let on = localStorage.getItem(STORAGE) === '1';
+  function apply(){
+    drawNote(on);
+    btn.classList.toggle('on', on);
+    if(on){
+      audio.play().then(()=>{ hint.style.display='none'; }).catch(()=>{});
+    } else {
+      audio.pause();
+    }
+  }
+  // initial: try autoplay if user opted in previously
+  apply();
+  // hide hint after first interaction
+  function hideHint(){ hint.style.display='none'; }
+
+  btn.addEventListener('click', ()=>{
+    on = !on;
+    localStorage.setItem(STORAGE, on?'1':'0');
+    apply();
+    hideHint();
+  });
+
+  // first tap anywhere starts BGM if not yet
+  document.addEventListener('pointerdown', function once(){
+    if(!on){
+      on = true;
+      localStorage.setItem(STORAGE,'1');
+      apply();
+    }
+    hideHint();
+    document.removeEventListener('pointerdown', once);
+  }, { once:true });
+})();
 
 /* =====================================================================
    DATA
