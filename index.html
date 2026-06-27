@@ -337,6 +337,104 @@
   }
   .foot b{color:var(--kink)}
 
+  /* ===== Goal box (10位に入るためには) ===== */
+  .goal-box{
+    margin-top:20px;padding:16px 14px 14px;
+    background:rgba(168,85,247,.12);
+    border:3px solid var(--kpurple);box-shadow:var(--shadow-pixel-sm);
+  }
+  .goal-eyebrow{
+    font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kpurple);letter-spacing:.12em;margin-bottom:4px;
+  }
+  .goal-title{
+    font-family:"DotGothic16",monospace;font-size:18px;color:#fff;
+    text-shadow:2px 2px 0 var(--kpurple);margin-bottom:8px;letter-spacing:.04em;
+  }
+  .goal-lead{
+    font-family:"DotGothic16",monospace;font-size:12.5px;color:var(--kink);
+    line-height:1.7;margin-bottom:10px;
+  }
+  .goal-lead b{color:var(--kyellow);font-weight:400}
+  .goal-list{
+    list-style:none;padding:0;margin:0 0 10px;
+    display:flex;flex-direction:column;gap:7px;
+  }
+  .goal-list li{
+    font-family:"DotGothic16",monospace;font-size:12px;color:#fff;
+    padding:7px 9px;background:var(--kdark2);border:2px dashed var(--kpurple);
+    line-height:1.5;
+  }
+  .goal-list b{color:var(--kyellow);font-weight:400;font-size:13px}
+  .g-tag{
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:10.5px;
+    padding:2px 7px;border:2px solid;margin-right:6px;letter-spacing:.04em;
+  }
+  .g-tag.pink{color:var(--kpink);border-color:var(--kpink);background:rgba(255,45,120,.1)}
+  .g-tag.yellow{color:var(--kyellow);border-color:var(--kyellow);background:rgba(253,224,71,.1)}
+  .g-tag.purple{color:var(--kpurple);border-color:var(--kpurple);background:rgba(168,85,247,.1)}
+  .goal-foot{
+    font-family:"DotGothic16",monospace;font-size:13px;color:var(--kpink);
+    text-align:center;padding-top:8px;border-top:2px dotted var(--kborder);
+  }
+  .goal-foot b{color:var(--kyellow);font-weight:400;font-size:15px}
+
+  /* ===== Present box (ママのプレゼント) ===== */
+  .present-box{
+    margin-top:18px;padding:16px 14px;text-align:center;position:relative;
+    background:
+      repeating-linear-gradient(45deg,rgba(253,224,71,.08) 0 8px,transparent 8px 16px),
+      var(--kdark2);
+    border:3px solid var(--kyellow);box-shadow:var(--shadow-pixel-sm);
+  }
+  .present-ribbon{
+    position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+    font-family:"DotGothic16",monospace;font-size:11px;
+    background:var(--kpink);color:#fff;padding:3px 12px;
+    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+    letter-spacing:.12em;
+  }
+  .present-msg{
+    font-family:"DotGothic16",monospace;font-size:13.5px;color:#fff;
+    line-height:1.85;margin-top:6px;
+  }
+  .present-msg b{color:var(--kyellow);font-weight:400;font-size:14.5px;text-shadow:1.5px 1.5px 0 var(--kpink)}
+  .present-sub{font-size:11.5px;color:var(--kpink);display:inline-block;margin-top:4px;animation:pixel-blink 1.4s steps(2,end) infinite}
+
+  /* ===== TOP10 celebration ===== */
+  .top10{
+    margin-top:32px;padding:28px 18px 22px;text-align:center;
+    background:
+      repeating-linear-gradient(45deg,rgba(255,45,120,.08) 0 12px,transparent 12px 24px),
+      linear-gradient(160deg,var(--kcard2),var(--kcard));
+    border:3px solid var(--kpink);
+    box-shadow:6px 6px 0 #000,0 0 0 6px var(--kyellow),9px 9px 0 6px #000;
+    position:relative;
+  }
+  .top10-deco-l,.top10-deco-r{
+    position:absolute;top:10px;font-family:"DotGothic16",monospace;font-size:22px;
+    color:var(--kyellow);text-shadow:2px 2px 0 var(--kpink);
+    animation:pixel-sparkle 1.6s steps(6) infinite;
+  }
+  .top10-deco-l{left:14px}
+  .top10-deco-r{right:14px;animation-delay:.5s}
+  .top10-badge{
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kdark);background:var(--kyellow);
+    padding:5px 14px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+    letter-spacing:.18em;margin-bottom:12px;
+  }
+  .top10-title{
+    font-family:"DotGothic16",monospace;font-size:32px;color:var(--kyellow);
+    text-shadow:3px 3px 0 var(--kpink),6px 6px 0 #000;
+    letter-spacing:.04em;line-height:1.2;
+    animation:pixel-blink 1.2s steps(2,end) infinite;
+  }
+  .top10-sub{
+    margin-top:10px;font-family:"DotGothic16",monospace;font-size:13px;color:#fff;
+  }
+  .top10-sub b{color:var(--kpink);font-weight:400}
+
   /* ===== Gender section ===== */
   .gcard{
     background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
@@ -549,7 +647,50 @@
       </div>
       <h2>★ そうひょう ★</h2>
       <p>言語と実技という、伸ばしやすくて将来にもつながる力をしっかり持ってる。全教科で平均超え＆合計で学年上位というのは、地道に積み重ねてきた結果！　胸を張っていい成績です。<br><br>次に向けては、<b>数学の取りこぼしをへらす</b>のが一番のねらいどころ。得意な国語・外国語はこのまま伸ばし、技術家庭の提出物を丁寧に。これだけで合計順位はもう一段上がります。よく頑張りました🌱</p>
+
+      <!-- 10位に入るためには -->
+      <div class="goal-box">
+        <p class="goal-eyebrow">▶ ねらえ！学年TOP10</p>
+        <h3 class="goal-title">10位に入るためには？</h3>
+        <p class="goal-lead">いまの想定は <b>約18位</b>（728点）。<br>あと <b>8人ぬく</b> ＝ ざっくり <b>＋25〜30点</b> でトップ10ねらえる！</p>
+        <ul class="goal-list">
+          <li><span class="g-tag pink">数学</span> 77 → <b>85</b>（＋8点）／ 5教科の中で一番ぬきやすい帯にいる</li>
+          <li><span class="g-tag yellow">技術・家庭</span> 66 → <b>78</b>（＋12点）／ 提出物と実技をていねいに</li>
+          <li><span class="g-tag purple">理科</span> 87 → <b>93</b>（＋6点）／ 応用問題を1〜2問もぎとる</li>
+        </ul>
+        <p class="goal-foot">→ 合計 <b>755点くらい</b> でTOP10ゾーン突入！</p>
+      </div>
+
+      <!-- ママのプレゼント -->
+      <div class="present-box">
+        <div class="present-ribbon">🎁 SECRET</div>
+        <p class="present-msg">
+          ところで…<br>
+          <b>10位に入ったら、ママからビッグなプレゼントがあるらしいよ！？</b><br>
+          <span class="present-sub">なにかは…ヒミツ✨</span>
+        </p>
+      </div>
+
       <p class="sig">— テスト結果より</p>
+    </div>
+  </section>
+
+  <!-- TOP 10 ねらえセクション -->
+  <section>
+    <div class="top10">
+      <div class="top10-deco-l">★</div>
+      <div class="top10-deco-r">★</div>
+      <p class="top10-badge">NEXT GOAL ⇢ TOP 10</p>
+      <h2 class="top10-title">学年TOP10に<br>入ったら…</h2>
+      <p class="top10-sub">うさぎが本気でダンス＆<br><b>ママからビッグなプレゼント</b>が待ってるらしい🎁</p>
+
+      <div class="rabbit-stage" style="margin-top:20px">
+        <div class="rabbit-wrap">
+          <div class="star-burst" id="starBurst2"></div>
+          <svg width="140" height="210" viewBox="0 0 16 24" id="rabbit-top10"></svg>
+        </div>
+        <div class="rabbit-bubble pixel-sm">めざせ TOP10！<br>おうえん してるよ〜🐰</div>
+      </div>
     </div>
   </section>
 
@@ -706,8 +847,8 @@ function pixelStar(size,color){
   }));
   return `<svg width="${size}" height="${size}" viewBox="0 0 5 5" style="display:block">${p}</svg>`;
 }
-function burstStars(){
-  const root = document.getElementById('starBurst');
+function burstStars(id){
+  const root = document.getElementById(id || 'starBurst');
   if(!root) return;
   root.innerHTML = '';
   SPIN_STARS.forEach((star,i)=>{
@@ -724,11 +865,11 @@ function burstStars(){
   setTimeout(()=>{ root.innerHTML=''; }, 900);
 }
 
-/* ---- Run hero rabbit dance ---- */
-(function(){
-  const svg = document.getElementById('rabbit-hero');
+/* ---- Run dancing rabbits ---- */
+function runDance(svgId, burstId, offset){
+  const svg = document.getElementById(svgId);
   if(!svg) return;
-  let i = 0;
+  let i = offset || 0;
   function tick(){
     const frame = DANCE_SEQUENCE[i];
     const s = RABBIT_BASE.map(r=>[...r]);
@@ -736,12 +877,15 @@ function burstStars(){
     applyPose(s, frame.pose);
     spriteToSVG(svg, s);
     svg.style.transform = frame.t;
-    if(frame.pose === 'spin') burstStars();
+    svg.style.transition = 'transform .15s ease-out';
+    if(frame.pose === 'spin') burstStars(burstId);
     i = (i + 1) % DANCE_SEQUENCE.length;
   }
   tick();
   setInterval(tick, 250);
-})();
+}
+runDance('rabbit-hero',  'starBurst',  0);
+runDance('rabbit-top10', 'starBurst2', 5);
 
 /* ---- Static rabbits ---- */
 staticRabbit('rabbit-closing','wink');
