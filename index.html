@@ -193,22 +193,29 @@
 
   /* ===== Hero ===== */
   .hero{
-    margin-top:22px;padding:24px 20px 22px;position:relative;
+    margin-top:22px;padding:26px 20px 22px;position:relative;text-align:center;
   }
   .hero-tag{
-    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kpink);
-    letter-spacing:.12em;
+    display:inline-block;
+    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kpink);
+    letter-spacing:.14em;margin-bottom:2px;
   }
   .bignum{
     font-family:"DotGothic16",monospace;font-weight:400;
-    font-size:74px;line-height:.95;margin:4px 0 4px;
+    font-size:108px;line-height:.95;margin:8px 0 10px;
     color:var(--kyellow);
-    text-shadow:4px 4px 0 var(--kpink),8px 8px 0 rgba(0,0,0,.7);
-    letter-spacing:.02em;
+    text-shadow:5px 5px 0 var(--kpink),10px 10px 0 rgba(0,0,0,.8);
+    letter-spacing:.02em;text-align:center;
+    display:block;
   }
-  .bignum span{font-size:24px;margin-left:6px;color:#fff;text-shadow:2px 2px 0 #000}
-  .hero .sub{font-size:13px;color:var(--kink-soft);font-family:"DotGothic16",monospace}
+  .bignum span{font-size:32px;margin-left:8px;color:#fff;text-shadow:3px 3px 0 #000;vertical-align:6px}
+  .hero .sub{font-size:13px;color:var(--kink-soft);font-family:"DotGothic16",monospace;text-align:center}
   .hero .sub b{color:var(--kyellow);font-weight:400}
+  .hero .rankbig, .hero .girls-rank, .hero .strip{text-align:left}
+  @media (max-width:480px){
+    .bignum{font-size:84px;text-shadow:4px 4px 0 var(--kpink),8px 8px 0 rgba(0,0,0,.8)}
+    .bignum span{font-size:26px;vertical-align:4px}
+  }
 
   .rankbig{
     display:flex;align-items:baseline;gap:10px;margin-top:18px;
