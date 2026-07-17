@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rabbit.css">
 <style>
   :root{
     --kpink:#FF2D78;
@@ -294,13 +295,31 @@
 </style>
 </head>
 <body>
+
+<!-- floating rabbits (decorative) -->
+<div class="float-rabbit fr1" aria-hidden="true">
+  <svg width="56" height="84" viewBox="0 0 16 24" id="float-rabbit-template" class="spin2d"></svg>
+</div>
+<div class="float-rabbit fr2" aria-hidden="true">
+  <svg width="48" height="72" viewBox="0 0 16 24" id="float-rabbit-template2" class="spin3d"></svg>
+</div>
+
 <div class="wrap">
 
   <header>
     <span class="eyebrow">REPORT CARD - Y1 / TERM 1</span>
     <h1>さらちゃんの<br><span class="pink">通知表</span>ぶんせき</h1>
+
+    <div class="rabbit-stage">
+      <div class="rabbit-wrap">
+        <div class="star-burst" id="starBurst"></div>
+        <svg width="80" height="120" viewBox="0 0 16 24" id="rabbit-hero"></svg>
+      </div>
+      <div class="rabbit-bubble big"><span class="pink">おつかれさま！</span><br>いっしょに見てみよっ</div>
+    </div>
+
     <p class="who">三宿中学校　1年E組 12番　木村さら　／　令和8年 1学期</p>
-    <a class="back-link" href="../index.html">← 期末テスト分析にもどる</a>
+    <a class="back-link" href="../index.html">← 目次にもどる</a>
   </header>
 
   <!-- ============ HERO SUMMARY ============ -->
@@ -591,6 +610,9 @@
   <!-- ============ モチベーション ============ -->
   <section>
     <div class="moti">
+      <div style="position:absolute;right:14px;top:-40px">
+        <svg width="64" height="96" viewBox="0 0 16 24" id="rabbit-moti" class="hop-rabbit"></svg>
+      </div>
       <h2>★ さらへ ★</h2>
       <p>
         まず、<b>71日ぜんぶ出席</b>。遅刻もゼロ、早退もゼロ。これは通知表の中でいちばん大事な <em>「土台」</em>。この土台があるから、点数の話ができるんだよ。すごいことだからね。
@@ -621,9 +643,18 @@
   </p>
 
   <div class="back-bottom">
-    <a class="back-link" href="../index.html">← TOPにもどる</a>
+    <a class="back-link" href="../index.html">← 目次にもどる</a>
   </div>
 
 </div>
+
+<script src="../assets/rabbit.js"></script>
+<script>
+  runDance('rabbit-hero', 'starBurst', 0);
+  staticRabbit('rabbit-moti', 'wink');
+  staticRabbit('float-rabbit-template', 'cheer');
+  staticRabbit('float-rabbit-template2', 'happy');
+</script>
+
 </body>
 </html>

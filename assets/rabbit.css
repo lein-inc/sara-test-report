@@ -1,0 +1,81 @@
+/* ============================================================
+   Shared Pixel Rabbit CSS
+   used by index.html and reports/*.html
+   ============================================================ */
+
+@keyframes pixel-blink{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes pixel-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pixel-sparkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
+@keyframes rabbit-dance{0%,100%{transform:translateY(0) rotate(-3deg)}25%{transform:translateY(-4px) rotate(5deg)}50%{transform:translateY(-2px) rotate(-2deg)}75%{transform:translateY(-6px) rotate(4deg)}}
+@keyframes rabbit-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes rabbit-spin{
+  0%{transform:translateY(0) rotateY(0deg) scale(1)}
+  25%{transform:translateY(-8px) rotateY(180deg) scale(.95)}
+  50%{transform:translateY(-12px) rotateY(360deg) scale(1.05)}
+  75%{transform:translateY(-4px) rotateY(540deg) scale(.95)}
+  100%{transform:translateY(0) rotateY(720deg) scale(1)}
+}
+@keyframes rabbit-spin-z{
+  0%{transform:translateY(0) rotate(0deg)}
+  25%{transform:translateY(-6px) rotate(90deg)}
+  50%{transform:translateY(-10px) rotate(180deg)}
+  75%{transform:translateY(-4px) rotate(270deg)}
+  100%{transform:translateY(0) rotate(360deg)}
+}
+@keyframes star-pop2{
+  0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0deg)}
+  25%{opacity:1;transform:translate(calc(var(--sx)*.5),calc(var(--sy)*.5)) scale(1) rotate(120deg)}
+  100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(.3) rotate(360deg)}
+}
+.dance-rabbit{animation:rabbit-spin 2.4s ease-in-out infinite;transform-style:preserve-3d}
+.hop-rabbit{animation:rabbit-spin-z 3s linear infinite}
+.spin3d{animation:rabbit-spin 2.4s ease-in-out infinite;transform-style:preserve-3d}
+.spin2d{animation:rabbit-spin-z 3.6s linear infinite}
+
+.rabbit-stage{
+  position:relative;display:flex;flex-direction:column;align-items:center;
+  margin:22px auto 8px;
+}
+.rabbit-wrap{
+  position:relative;display:inline-block;
+  animation:pixel-float 2.4s ease-in-out infinite;
+}
+.rabbit-stage svg{display:block;image-rendering:pixelated;shape-rendering:crispEdges}
+
+.rabbit-bubble{
+  margin-top:14px;padding:14px 20px;background:#fff;color:#222252;
+  font-family:"DotGothic16",monospace;font-size:22px;font-weight:700;
+  border:3px solid #000;box-shadow:4px 4px 0 #000;
+  position:relative;text-align:center;letter-spacing:.04em;line-height:1.5;
+  max-width:90%;
+}
+.rabbit-bubble.big{font-size:26px;padding:18px 24px;letter-spacing:.06em}
+.rabbit-bubble .pink{color:#FF2D78;text-shadow:2px 2px 0 #000}
+.rabbit-bubble .white{color:#fff;text-shadow:2px 2px 0 #000}
+.rabbit-bubble::after{
+  content:"";position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  border:7px solid transparent;border-bottom-color:#000;
+  filter:drop-shadow(0 -1px 0 #000);
+}
+.rabbit-bubble::before{
+  content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-bottom-color:#fff;z-index:1;
+}
+@media (max-width:480px){
+  .rabbit-bubble{font-size:18px}
+  .rabbit-bubble.big{font-size:21px;padding:14px 18px}
+}
+
+.star-burst{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.star-burst .s{position:absolute;left:50%;top:42%;image-rendering:pixelated;shape-rendering:crispEdges}
+
+/* Floating decorative rabbits (fixed corners) */
+.float-rabbit{position:fixed;pointer-events:none;z-index:5;opacity:.85}
+.float-rabbit.fr1{bottom:24px;left:16px}
+.float-rabbit.fr2{top:120px;right:14px}
+@media (max-width:520px){
+  .float-rabbit.fr2{display:none}
+}
+
+/* Small inline rabbit variants */
+.closing-rabbit{position:absolute;right:14px;top:-32px}

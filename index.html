@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>さらちゃんのテスト分析</title>
+<title>さらちゃんの学びログ ｜ 目次</title>
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
-<meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/rabbit.css">
 <style>
   :root{
     --kpink:#FF2D78;
@@ -30,7 +30,7 @@
     --shadow-pixel-sm:2px 2px 0 #000;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
   body{
     font-family:"Zen Kaku Gothic New",system-ui,sans-serif;
     background:var(--kdark);
@@ -42,495 +42,119 @@
     color:var(--kink);
     line-height:1.75;
     letter-spacing:.02em;
-    padding-bottom:48px;
+    padding-bottom:60px;
     -webkit-tap-highlight-color:transparent;
   }
-  .wrap{max-width:620px;margin:0 auto;padding:0 16px}
-  .pixel{font-family:"DotGothic16",monospace;letter-spacing:.04em;text-shadow:2px 2px 0 rgba(0,0,0,.7)}
-  .pixel-sm{font-family:"DotGothic16",monospace;letter-spacing:.04em}
-
-  /* ===== Pixel base styles ===== */
-  .pixel-card{
-    background:var(--kcard);
-    border:3px solid #fff;
-    box-shadow:var(--shadow-pixel);
-    border-radius:0;
-  }
-  .pixel-card-pink{
-    background:var(--kcard);
-    border:3px solid var(--kpink);
-    box-shadow:var(--shadow-pixel);
-    border-radius:0;
-  }
-  .pixel-card-yellow{
-    background:var(--kcard);
-    border:3px solid var(--kyellow);
-    box-shadow:var(--shadow-pixel);
-    border-radius:0;
-  }
-  .pixel-card-purple{
-    background:var(--kcard);
-    border:3px solid var(--kpurple);
-    box-shadow:var(--shadow-pixel);
-    border-radius:0;
-  }
-  .pixel-chip{
-    display:inline-flex;align-items:center;gap:6px;
-    padding:5px 12px;font-family:"DotGothic16",monospace;
-    font-size:11px;font-weight:700;border:2px solid #fff;
-    box-shadow:var(--shadow-pixel-sm);background:var(--kcard);
-    color:#fff;letter-spacing:.06em;
-  }
-  .pixel-chip.pink{border-color:var(--kpink);color:var(--kpink);background:rgba(255,45,120,.12)}
-  .pixel-chip.purple{border-color:var(--kpurple);color:var(--kpurple);background:rgba(168,85,247,.12)}
-  .pixel-chip.yellow{border-color:var(--kyellow);color:var(--kyellow);background:rgba(253,224,71,.1)}
-  .pixel-chip.green{border-color:var(--kgreen);color:var(--kgreen);background:rgba(16,185,129,.1)}
-  .pixel-chip.blue{border-color:var(--kblue);color:var(--kblue);background:rgba(96,165,250,.1)}
-
-  /* ===== Animations ===== */
-  @keyframes pixel-blink{0%,100%{opacity:1}50%{opacity:.45}}
-  @keyframes pixel-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-  @keyframes pixel-sparkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
-  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-  @keyframes star-pop{0%{opacity:0;transform:scale(0) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(180deg)}100%{opacity:0;transform:scale(.4) rotate(360deg)}}
-  @keyframes rabbit-dance{0%,100%{transform:translateY(0) rotate(-3deg)}25%{transform:translateY(-4px) rotate(5deg)}50%{transform:translateY(-2px) rotate(-2deg)}75%{transform:translateY(-6px) rotate(4deg)}}
-  @keyframes rabbit-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  @keyframes rabbit-spin{
-    0%{transform:translateY(0) rotateY(0deg) scale(1)}
-    25%{transform:translateY(-8px) rotateY(180deg) scale(.95)}
-    50%{transform:translateY(-12px) rotateY(360deg) scale(1)}
-    75%{transform:translateY(-8px) rotateY(540deg) scale(.95)}
-    100%{transform:translateY(0) rotateY(720deg) scale(1)}
-  }
-  @keyframes rabbit-spin-z{
-    0%{transform:rotate(0deg)}
-    100%{transform:rotate(360deg)}
-  }
-
-  .blink{animation:pixel-blink 1s steps(2,end) infinite}
-  .float{animation:pixel-float 3s ease-in-out infinite}
-  .rise{animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
-  .dance-rabbit{animation:rabbit-spin 2.4s ease-in-out infinite;transform-style:preserve-3d}
-  .hop-rabbit{animation:rabbit-spin-z 3s linear infinite}
-  .spin3d{animation:rabbit-spin 2.4s ease-in-out infinite;transform-style:preserve-3d}
-  .spin2d{animation:rabbit-spin-z 3.6s linear infinite}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px}
 
   /* ===== Header ===== */
-  header{padding:34px 0 12px;text-align:center;position:relative}
+  header{padding:36px 0 12px;text-align:center;position:relative}
   .eyebrow{
-    display:inline-flex;align-items:center;gap:10px;
-    font-family:"DotGothic16",monospace;font-size:11px;
-    color:var(--kpurple);letter-spacing:.18em;
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kyellow);letter-spacing:.16em;margin-bottom:14px;
+    padding:5px 14px;border:2px solid var(--kyellow);box-shadow:var(--shadow-pixel-sm);
+    background:rgba(253,224,71,.08);
   }
-  .eyebrow::before,.eyebrow::after{content:"★";color:var(--kyellow);font-size:10px}
-  header h1{
-    font-family:"DotGothic16",monospace;font-weight:400;font-size:30px;
-    margin-top:14px;letter-spacing:.05em;
-    color:#fff;
-    text-shadow:3px 3px 0 var(--kpink),6px 6px 0 rgba(0,0,0,.8);
-    line-height:1.3;
+  .sparkle{
+    position:absolute;font-family:"DotGothic16",monospace;
+    color:var(--kyellow);font-size:20px;text-shadow:2px 2px 0 var(--kpink);
+    animation:pixel-sparkle 1.6s steps(6) infinite;
   }
-  header h1 .pink{color:var(--kpink);text-shadow:3px 3px 0 #000}
+  .sparkle.s1{top:16px;left:12%;animation-delay:0s}
+  .sparkle.s2{top:32px;right:14%;animation-delay:.4s}
+  .sparkle.s3{top:80px;left:18%;animation-delay:.8s}
+  .sparkle.s4{top:100px;right:20%;animation-delay:1.2s}
+  h1{
+    font-family:"DotGothic16",monospace;font-size:36px;line-height:1.3;
+    color:#fff;text-shadow:3px 3px 0 var(--kpink),6px 6px 0 #000;
+    letter-spacing:.04em;
+  }
+  h1 .pink{color:var(--kpink);text-shadow:3px 3px 0 #fff,6px 6px 0 #000}
   .who{
-    font-family:"DotGothic16",monospace;font-size:11.5px;
-    color:var(--kink-soft);margin-top:14px;letter-spacing:.06em;
+    font-family:"DotGothic16",monospace;font-size:11.5px;color:var(--kink-soft);
+    margin-top:14px;line-height:1.7;
   }
 
-  /* Rabbit area */
-  .rabbit-stage{
-    position:relative;display:flex;flex-direction:column;align-items:center;
-    margin:14px auto 18px;gap:12px;
-  }
-  .rabbit-wrap{
-    position:relative;width:88px;height:132px;
-    display:flex;align-items:flex-end;justify-content:center;
-    overflow:visible;
-  }
-  .rabbit-stage svg{display:block;image-rendering:pixelated;shape-rendering:crispEdges}
-  #rabbit-hero{
-    transition:transform .15s ease-out;
-  }
-  .rabbit-bubble{
-    position:relative;background:var(--kcard);color:var(--kyellow);
-    padding:14px 20px;font-family:"DotGothic16",monospace;font-size:22px;
-    border:3px solid var(--kyellow);box-shadow:var(--shadow-pixel);
-    line-height:1.4;letter-spacing:.04em;text-align:center;font-weight:400;
-    text-shadow:2px 2px 0 #000;
-  }
-  .rabbit-bubble.big{font-size:26px;padding:18px 24px;letter-spacing:.06em}
-  .rabbit-bubble .pink{color:var(--kpink);text-shadow:2px 2px 0 #000}
-  .rabbit-bubble .white{color:#fff;text-shadow:2px 2px 0 #000}
-  .rabbit-bubble::after{
-    content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%);
-    width:0;height:0;border:7px solid transparent;
-    border-bottom-color:var(--kyellow);
-  }
-  .rabbit-bubble::before{
-    content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);
-    width:0;height:0;border:7px solid transparent;
-    border-bottom-color:var(--kcard);z-index:1;
-  }
-  @media (max-width:480px){
-    .rabbit-bubble{font-size:18px}
-    .rabbit-bubble.big{font-size:21px;padding:14px 18px}
-  }
-  /* star burst overlay */
-  .star-burst{position:absolute;inset:0;pointer-events:none;overflow:visible}
-  .star-burst .s{position:absolute;left:50%;top:42%;image-rendering:pixelated;shape-rendering:crispEdges}
-  @keyframes star-pop2{
-    0%{opacity:0;transform:scale(0) rotate(0deg) translate(0,0)}
-    25%{opacity:1;transform:scale(1.6) rotate(90deg) translate(var(--sx),var(--sy))}
-    50%{opacity:1;transform:scale(1) rotate(180deg) translate(var(--sx),var(--sy))}
-    100%{opacity:0;transform:scale(.3) rotate(360deg) translate(calc(var(--sx)*2),calc(var(--sy)*2))}
-  }
-
-  /* sparkle dots */
-  .sparkle{position:absolute;color:var(--kyellow);font-size:14px;animation:pixel-sparkle 2s steps(6) infinite}
-  .sparkle.s1{top:8%;left:8%}
-  .sparkle.s2{top:14%;right:10%;animation-delay:.4s}
-  .sparkle.s3{top:62%;left:5%;color:var(--kpink);animation-delay:.8s}
-  .sparkle.s4{top:50%;right:6%;color:var(--kpurple);animation-delay:1.2s}
-
-  /* ===== Hero ===== */
-  .hero{
-    margin-top:22px;padding:26px 20px 22px;position:relative;text-align:center;
-  }
-  .hero-tag{
-    display:inline-block;
-    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kpink);
-    letter-spacing:.14em;margin-bottom:2px;
-  }
-  .bignum{
-    font-family:"DotGothic16",monospace;font-weight:400;
-    font-size:108px;line-height:.95;margin:8px 0 10px;
-    color:var(--kyellow);
-    text-shadow:5px 5px 0 var(--kpink),10px 10px 0 rgba(0,0,0,.8);
-    letter-spacing:.02em;text-align:center;
-    display:block;
-  }
-  .bignum .roul{color:var(--kyellow);font-size:inherit}
-  .bignum .unit{font-size:36px;margin-left:8px;color:#fff;text-shadow:3px 3px 0 #000;vertical-align:10px}
-  .hero .sub{font-size:13px;color:var(--kink-soft);font-family:"DotGothic16",monospace;text-align:center}
-  .hero .sub b{color:var(--kyellow);font-weight:400}
-  .hero .rankbig, .hero .girls-rank, .hero .strip{text-align:left}
-  @media (max-width:480px){
-    .bignum{font-size:84px;text-shadow:4px 4px 0 var(--kpink),8px 8px 0 rgba(0,0,0,.8)}
-    .bignum .unit{font-size:28px;vertical-align:8px}
-  }
-
-  .rankbig{
-    display:flex;align-items:baseline;gap:10px;margin-top:18px;
-    padding:14px 16px;background:linear-gradient(135deg,rgba(255,45,120,.2),rgba(168,85,247,.2));
-    border:3px solid var(--kpink);box-shadow:var(--shadow-pixel-sm);
-  }
-  .rankbig .lab{font-family:"DotGothic16",monospace;font-size:11px;font-weight:700;color:var(--kpink);letter-spacing:.1em}
-  .rankbig .num{font-family:"DotGothic16",monospace;font-size:30px;color:#fff;line-height:1;text-shadow:2px 2px 0 var(--kpink-deep)}
-  .rankbig .num small{font-size:14px;margin-left:2px;color:var(--kink)}
-  .rankbig .of{font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft);margin-left:auto}
-
-  .pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-
-  /* ===== Roulette ===== */
-  .roul{
-    display:inline-block;
-    font-variant-numeric:tabular-nums;
-    font-feature-settings:"tnum";
-  }
-  .roul.spinning{
-    animation:pixel-blink .12s steps(2,end) infinite;
-    color:var(--kyellow);
-  }
-
-  /* ===== Girls rank highlight ===== */
-  .girls-rank{
-    margin-top:22px;padding:16px 14px 14px;text-align:center;
-    background:
-      repeating-linear-gradient(45deg,rgba(255,45,120,.1) 0 10px,transparent 10px 20px),
-      linear-gradient(160deg,rgba(168,85,247,.15),rgba(255,45,120,.15));
+  /* ===== Hero pitch ===== */
+  .pitch{
+    margin:20px 0 8px;padding:22px 20px;text-align:center;
+    background:linear-gradient(160deg,var(--kcard),var(--kcard2));
     border:3px solid var(--kpink);
-    box-shadow:4px 4px 0 #000, 0 0 0 4px var(--kyellow), 7px 7px 0 4px #000;
+    box-shadow:var(--shadow-pixel-lg);
+  }
+  .pitch p{font-family:"DotGothic16",monospace;font-size:13.5px;color:var(--kink);line-height:1.95}
+  .pitch p b{color:var(--kyellow);font-weight:400}
+  .pitch p em{font-style:normal;color:var(--kpink)}
+
+  /* ===== TOC (目次) ===== */
+  .toc{
+    margin:24px 0 8px;padding:22px 18px 18px;
+    background:
+      repeating-linear-gradient(45deg,rgba(168,85,247,.08) 0 12px,transparent 12px 24px),
+      linear-gradient(160deg,var(--kcard),var(--kcard2));
+    border:3px solid var(--kpurple);
+    box-shadow:6px 6px 0 #000, 0 0 0 5px var(--kyellow), 10px 10px 0 5px #000;
     position:relative;
   }
-  .gr-eyebrow{
-    display:inline-block;font-family:"DotGothic16",monospace;font-size:10.5px;
+  .toc-eyebrow{
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:11px;
     color:var(--kdark);background:var(--kyellow);
-    padding:3px 11px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
-    letter-spacing:.16em;margin-bottom:8px;
+    padding:4px 12px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+    letter-spacing:.16em;margin-bottom:14px;
   }
-  .gr-lead{
-    font-family:"DotGothic16",monospace;font-size:13px;color:#fff;margin-bottom:4px;
+  .toc-title{
+    font-family:"DotGothic16",monospace;font-size:22px;color:var(--kyellow);
+    text-shadow:3px 3px 0 var(--kpurple),5px 5px 0 #000;letter-spacing:.04em;margin-bottom:12px;
   }
-  .gr-bignum{
-    font-family:"DotGothic16",monospace;font-size:54px;line-height:1;
-    color:var(--kyellow);
-    text-shadow:3px 3px 0 var(--kpink),6px 6px 0 #000;
-    letter-spacing:.04em;margin:6px 0 8px;
+  .toc-note{
+    font-family:"DotGothic16",monospace;font-size:11.5px;color:var(--kink);
+    line-height:1.85;margin-bottom:16px;padding-bottom:14px;
+    border-bottom:2px dashed var(--kborder);
   }
-  .gr-bignum small{font-size:22px;margin-left:4px;color:#fff;text-shadow:2px 2px 0 #000}
-  .gr-foot{
-    font-family:"DotGothic16",monospace;font-size:12px;color:#fff;letter-spacing:.04em;
-  }
-  .gr-foot b{color:var(--kpink);font-weight:400;font-size:14px}
-  @media (max-width:480px){
-    .gr-bignum{font-size:46px}
-  }
+  .toc-note b{color:var(--kpink);font-weight:400}
 
-  .strip{margin-top:24px}
-  .strip-label{
-    font-family:"DotGothic16",monospace;font-size:10.5px;
-    color:var(--kink-soft);margin-bottom:10px;
-    display:flex;justify-content:space-between;letter-spacing:.05em;
+  .toc-group{margin-top:18px}
+  .toc-group-title{
+    font-family:"DotGothic16",monospace;font-size:13px;color:var(--kpink);
+    letter-spacing:.08em;margin-bottom:8px;padding-bottom:4px;
+    border-bottom:2px solid var(--kpink);letter-spacing:.06em;
   }
-  .track{display:flex;align-items:flex-end;gap:4px;height:60px}
-  .seg{flex:1;background:var(--kpurple);border:2px solid #fff;border-bottom:0;position:relative;image-rendering:pixelated}
-  .seg.me{background:var(--kpink);box-shadow:0 0 12px rgba(255,45,120,.7)}
-  .seg .flag{
-    position:absolute;top:-26px;left:50%;transform:translateX(-50%);
-    font-family:"DotGothic16",monospace;font-size:10px;font-weight:700;
-    color:#fff;background:var(--kpink);padding:3px 7px;
-    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
-    white-space:nowrap;
+  .toc-group-title.mid{color:var(--kyellow);border-bottom-color:var(--kyellow)}
+  .toc-group-title.goal{color:var(--kgreen);border-bottom-color:var(--kgreen)}
+  .toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+  .toc-list a{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:12px 14px;text-decoration:none;
+    background:var(--kdark2);border:2px solid var(--kborder);
+    font-family:"DotGothic16",monospace;font-size:13px;color:var(--kink);
+    letter-spacing:.02em;transition:transform .05s,box-shadow .05s;
+    box-shadow:var(--shadow-pixel-sm);line-height:1.5;
   }
-  .axis{display:flex;justify-content:space-between;font-family:"DotGothic16",monospace;font-size:10px;color:var(--kink-soft);margin-top:8px;letter-spacing:.05em}
+  .toc-list a:active{transform:translate(2px,2px);box-shadow:none}
+  .toc-list a:hover{border-color:var(--kpink);color:#fff;background:var(--kcard)}
+  .toc-list .tag{
+    font-family:"DotGothic16",monospace;font-size:10px;letter-spacing:.06em;
+    padding:3px 8px;border:2px solid var(--kborder);color:var(--kink-soft);
+    background:var(--kdark);white-space:nowrap;flex-shrink:0;
+  }
+  .toc-list .tag.new{color:#fff;background:var(--kpink);border-color:var(--kpink);animation:pixel-blink 1.4s steps(2,end) infinite}
+  .toc-list .tag.pub{color:var(--kdark);background:var(--kyellow);border-color:var(--kyellow)}
+  .toc-list .tag.soon{color:var(--kink-soft);border-color:var(--kborder)}
+  .toc-list a.new{border-color:var(--kpink);background:rgba(255,45,120,.1)}
+  .toc-list a.pub{border-color:var(--kyellow);background:rgba(253,224,71,.06)}
+  .toc-list a.soon{opacity:.5;pointer-events:none;font-style:italic}
+  .toc-list a .name{flex:1;text-align:left}
+  .toc-list a .arrow{color:var(--kpink);font-family:"DotGothic16",monospace;font-size:14px;flex-shrink:0}
+  .toc-list a.soon .arrow{color:var(--kink-soft)}
 
-  /* ===== Section heading ===== */
-  section{margin-top:38px}
-  .sec-head{
-    display:flex;align-items:baseline;gap:10px;margin-bottom:6px;padding-left:4px;
-  }
-  .sec-head h2{
-    font-family:"DotGothic16",monospace;font-weight:400;font-size:20px;
-    letter-spacing:.04em;color:#fff;
-    text-shadow:2px 2px 0 var(--kpurple);
-  }
-  .sec-head h2::before{content:"▸ ";color:var(--kyellow)}
-  .sec-head .en{font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);letter-spacing:.18em;text-transform:uppercase}
-  .sec-note{font-size:12.5px;color:var(--kink-soft);margin:4px 0 16px;padding-left:4px;font-family:"DotGothic16",monospace;line-height:1.7}
-  .sec-note b{color:var(--kpink);font-weight:400}
-
-  .legend{
-    display:flex;gap:14px;font-family:"DotGothic16",monospace;font-size:11px;
-    color:var(--kink-soft);margin:0 0 14px;padding-left:4px;flex-wrap:wrap;letter-spacing:.04em;
-  }
-  .legend i{display:inline-block;width:11px;height:11px;border:2px solid #fff;margin-right:5px;vertical-align:-1px}
-
-  /* ===== Subject card ===== */
-  .card{
-    padding:16px 16px 14px;margin-bottom:14px;
-    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
-  }
-  .c-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-  .c-name{
-    font-family:"DotGothic16",monospace;font-size:16px;color:#fff;
-    text-shadow:2px 2px 0 var(--kpurple);
-  }
-  .c-rank{
-    font-family:"DotGothic16",monospace;font-size:10.5px;font-weight:700;
-    color:var(--kpink);background:rgba(255,45,120,.15);
-    padding:4px 10px;border:2px solid var(--kpink);white-space:nowrap;letter-spacing:.05em;
-  }
-  .c-rank.mid{color:var(--kyellow);background:rgba(253,224,71,.12);border-color:var(--kyellow)}
-  .c-rank.soft{color:var(--kink-soft);background:rgba(255,255,255,.05);border-color:var(--kborder)}
-  .c-score{display:flex;align-items:baseline;gap:10px;margin:6px 0 12px;flex-wrap:wrap}
-  .c-score .pt{
-    font-family:"DotGothic16",monospace;font-size:30px;line-height:1;color:var(--kyellow);
-    text-shadow:2px 2px 0 var(--kpink),4px 4px 0 #000;
-  }
-  .c-score .pt small{font-size:13px;margin-left:2px;color:#fff;text-shadow:1px 1px 0 #000}
-  .c-score .avg{font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft)}
-  .c-score .gap{font-family:"DotGothic16",monospace;font-size:11px;font-weight:700;color:var(--kgreen)}
-  .c-score .srank{
-    margin-left:auto;font-family:"DotGothic16",monospace;font-size:11px;
-    color:var(--kpink);background:rgba(255,45,120,.15);
-    padding:4px 9px;border:2px solid var(--kpink);white-space:nowrap;
-  }
-
-  .mini{position:relative}
-  .mbars{display:flex;align-items:flex-end;gap:3px;height:54px;position:relative;z-index:1}
-  .mbars .b{flex:1;background:var(--kpurple);border:1.5px solid #fff;border-bottom:0;min-height:3px}
-  .mbars .b.me{background:var(--kpink);box-shadow:0 0 10px rgba(255,45,120,.6)}
-  .avgline{position:absolute;top:-4px;bottom:18px;width:0;border-left:2px dashed var(--kblue);z-index:2}
-  .avgline span{
-    position:absolute;top:-4px;left:5px;font-family:"DotGothic16",monospace;
-    font-size:9.5px;color:var(--kblue);white-space:nowrap;font-weight:700;
-  }
-  .mfoot{display:flex;justify-content:space-between;font-family:"DotGothic16",monospace;font-size:9.5px;color:var(--kink-soft);margin-top:6px;letter-spacing:.05em}
-
-  /* ===== Analysis blocks ===== */
-  .ana{
-    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
-    padding:4px 4px;
-  }
-  .item{display:flex;gap:14px;padding:16px 14px;border-bottom:2px dashed var(--kborder)}
-  .item:last-child{border-bottom:0}
-  .ic{
-    width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
-    font-family:"DotGothic16",monospace;font-size:16px;color:#fff;
-    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
-  }
-  .ic.g{background:var(--kgreen)}
-  .ic.r{background:var(--kpink)}
-  .ic.b{background:var(--kpurple)}
-  .item h3{
-    font-family:"DotGothic16",monospace;font-size:14.5px;color:#fff;margin-bottom:4px;
-    text-shadow:1px 1px 0 var(--kpurple);
-  }
-  .item p{font-size:13px;color:var(--kink);line-height:1.75;font-family:"DotGothic16",monospace}
-  .item .em{color:var(--kyellow);font-weight:700}
-
-  /* ===== Closing ===== */
-  .closing{
-    background:linear-gradient(160deg,var(--kcard),var(--kcard2));
-    border:3px solid var(--kyellow);
-    box-shadow:var(--shadow-pixel-lg);
-    padding:24px 22px;position:relative;
-  }
-  .closing h2{
-    font-family:"DotGothic16",monospace;font-size:18px;margin-bottom:10px;
-    color:var(--kyellow);text-shadow:2px 2px 0 var(--kpink);
-  }
-  .closing p{font-family:"DotGothic16",monospace;font-size:13.5px;color:var(--kink);line-height:1.9}
-  .closing p b{color:var(--kpink);font-weight:400}
-  .closing .sig{margin-top:16px;font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft);text-align:right}
-  .closing-rabbit{position:absolute;right:14px;top:-32px}
-
+  /* Footer note */
   .foot{
-    font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);
-    line-height:1.8;margin-top:28px;text-align:center;
+    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft);
+    line-height:1.8;margin-top:32px;text-align:center;
   }
   .foot b{color:var(--kink)}
 
-  /* ===== Goal box (10位に入るためには) ===== */
-  .goal-box{
-    margin-top:20px;padding:16px 14px 14px;
-    background:rgba(168,85,247,.12);
-    border:3px solid var(--kpurple);box-shadow:var(--shadow-pixel-sm);
-  }
-  .goal-eyebrow{
-    font-family:"DotGothic16",monospace;font-size:11px;
-    color:var(--kpurple);letter-spacing:.12em;margin-bottom:4px;
-  }
-  .goal-title{
-    font-family:"DotGothic16",monospace;font-size:18px;color:#fff;
-    text-shadow:2px 2px 0 var(--kpurple);margin-bottom:8px;letter-spacing:.04em;
-  }
-  .goal-lead{
-    font-family:"DotGothic16",monospace;font-size:12.5px;color:var(--kink);
-    line-height:1.7;margin-bottom:10px;
-  }
-  .goal-lead b{color:var(--kyellow);font-weight:400}
-  .goal-list{
-    list-style:none;padding:0;margin:0 0 10px;
-    display:flex;flex-direction:column;gap:7px;
-  }
-  .goal-list li{
-    font-family:"DotGothic16",monospace;font-size:12px;color:#fff;
-    padding:7px 9px;background:var(--kdark2);border:2px dashed var(--kpurple);
-    line-height:1.5;
-  }
-  .goal-list b{color:var(--kyellow);font-weight:400;font-size:13px}
-  .g-tag{
-    display:inline-block;font-family:"DotGothic16",monospace;font-size:10.5px;
-    padding:2px 7px;border:2px solid;margin-right:6px;letter-spacing:.04em;
-  }
-  .g-tag.pink{color:var(--kpink);border-color:var(--kpink);background:rgba(255,45,120,.1)}
-  .g-tag.yellow{color:var(--kyellow);border-color:var(--kyellow);background:rgba(253,224,71,.1)}
-  .g-tag.purple{color:var(--kpurple);border-color:var(--kpurple);background:rgba(168,85,247,.1)}
-  .goal-foot{
-    font-family:"DotGothic16",monospace;font-size:13px;color:var(--kpink);
-    text-align:center;padding-top:8px;border-top:2px dotted var(--kborder);
-  }
-  .goal-foot b{color:var(--kyellow);font-weight:400;font-size:15px}
-
-  /* ===== Present box (ママのプレゼント) ===== */
-  .present-box{
-    margin-top:18px;padding:16px 14px;text-align:center;position:relative;
-    background:
-      repeating-linear-gradient(45deg,rgba(253,224,71,.08) 0 8px,transparent 8px 16px),
-      var(--kdark2);
-    border:3px solid var(--kyellow);box-shadow:var(--shadow-pixel-sm);
-  }
-  .present-ribbon{
-    position:absolute;top:-12px;left:50%;transform:translateX(-50%);
-    font-family:"DotGothic16",monospace;font-size:11px;
-    background:var(--kpink);color:#fff;padding:3px 12px;
-    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
-    letter-spacing:.12em;
-  }
-  .present-msg{
-    font-family:"DotGothic16",monospace;font-size:13.5px;color:#fff;
-    line-height:1.85;margin-top:6px;
-  }
-  .present-msg b{color:var(--kyellow);font-weight:400;font-size:14.5px;text-shadow:1.5px 1.5px 0 var(--kpink)}
-  .present-sub{font-size:11.5px;color:var(--kpink);display:inline-block;margin-top:4px;animation:pixel-blink 1.4s steps(2,end) infinite}
-
-  /* ===== TOP10 celebration ===== */
-  .top10{
-    margin-top:32px;padding:28px 18px 22px;text-align:center;
-    background:
-      repeating-linear-gradient(45deg,rgba(255,45,120,.08) 0 12px,transparent 12px 24px),
-      linear-gradient(160deg,var(--kcard2),var(--kcard));
-    border:3px solid var(--kpink);
-    box-shadow:6px 6px 0 #000,0 0 0 6px var(--kyellow),9px 9px 0 6px #000;
-    position:relative;
-  }
-  .top10-deco-l,.top10-deco-r{
-    position:absolute;top:10px;font-family:"DotGothic16",monospace;font-size:22px;
-    color:var(--kyellow);text-shadow:2px 2px 0 var(--kpink);
-    animation:pixel-sparkle 1.6s steps(6) infinite;
-  }
-  .top10-deco-l{left:14px}
-  .top10-deco-r{right:14px;animation-delay:.5s}
-  .top10-badge{
-    display:inline-block;font-family:"DotGothic16",monospace;font-size:11px;
-    color:var(--kdark);background:var(--kyellow);
-    padding:5px 14px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
-    letter-spacing:.18em;margin-bottom:12px;
-  }
-  .top10-title{
-    font-family:"DotGothic16",monospace;font-size:32px;color:var(--kyellow);
-    text-shadow:3px 3px 0 var(--kpink),6px 6px 0 #000;
-    letter-spacing:.04em;line-height:1.2;
-    animation:pixel-blink 1.2s steps(2,end) infinite;
-  }
-  .top10-sub{
-    margin-top:10px;font-family:"DotGothic16",monospace;font-size:13px;color:#fff;
-  }
-  .top10-sub b{color:var(--kpink);font-weight:400}
-
-  /* ===== Gender section ===== */
-  .gcard{
-    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
-    padding:14px 16px;margin-bottom:12px;
-  }
-  .g-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-  .g-name{font-family:"DotGothic16",monospace;font-size:15px;color:#fff;text-shadow:1.5px 1.5px 0 var(--kpurple)}
-  .g-lead{
-    font-family:"DotGothic16",monospace;font-size:10.5px;font-weight:700;
-    padding:4px 10px;white-space:nowrap;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
-  }
-  .g-lead.f{background:var(--kpink);color:#fff;border-color:#fff}
-  .g-lead.m{background:var(--kblue);color:#fff;border-color:#fff}
-  .dbar{position:relative;height:14px;background:var(--kdark2);border:2px solid #fff;margin:6px 0 12px}
-  .dcenter{position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--kyellow);transform:translateX(-50%);z-index:2}
-  .dfill{position:absolute;top:0;bottom:0;z-index:1}
-  .dfill.f{background:var(--kpink)}
-  .dfill.m{background:var(--kblue)}
-  .g-stats{display:flex;gap:6px;flex-wrap:wrap;font-family:"DotGothic16",monospace;font-size:11.5px}
-  .g-stats .chip{padding:3px 9px;font-weight:700;background:var(--kdark2);border:2px solid var(--kborder);color:#fff}
-  .g-stats .chip.m{color:var(--kblue);border-color:var(--kblue)}
-  .g-stats .chip.f{color:var(--kpink);border-color:var(--kpink)}
-  .g-stats .chip.s{background:rgba(253,224,71,.14);color:var(--kyellow);border-color:var(--kyellow)}
-
-  /* ===== Floating rabbits ===== */
-  .float-rabbit{position:fixed;pointer-events:none;z-index:5;opacity:.85}
-  .float-rabbit.fr1{bottom:24px;left:16px}
-  .float-rabbit.fr2{top:120px;right:14px}
-  @media (max-width:520px){
-    .float-rabbit.fr2{display:none}
-  }
-
-  /* ===== BGM toggle button ===== */
+  /* BGM toggle */
   .bgm-btn{
     position:fixed;top:14px;right:14px;z-index:50;
     width:48px;height:48px;display:flex;align-items:center;justify-content:center;
@@ -542,7 +166,6 @@
   .bgm-btn:active{transform:translate(2px,2px);box-shadow:var(--shadow-pixel-sm)}
   .bgm-btn.on{border-color:var(--kpink);color:var(--kpink)}
   .bgm-btn svg{display:block;shape-rendering:crispEdges}
-  .bgm-btn .label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--kink-soft);white-space:nowrap}
   .bgm-hint{
     position:fixed;top:68px;right:14px;z-index:50;
     background:#fff;color:var(--kdark);
@@ -555,78 +178,14 @@
     width:0;height:0;border:6px solid transparent;border-bottom-color:var(--kdark);
   }
 
-  /* ===== TOC (レポート一覧) ===== */
-  .toc{
-    margin:22px 0 8px;padding:18px 16px 14px;
-    background:
-      repeating-linear-gradient(45deg,rgba(168,85,247,.06) 0 10px,transparent 10px 20px),
-      var(--kcard);
-    border:3px solid var(--kpurple);
-    box-shadow:var(--shadow-pixel);
-    position:relative;
-  }
-  .toc-eyebrow{
-    display:inline-block;font-family:"DotGothic16",monospace;font-size:10.5px;
-    color:#fff;background:var(--kpurple);
-    padding:3px 10px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
-    letter-spacing:.16em;margin-bottom:10px;
-  }
-  .toc-title{
-    font-family:"DotGothic16",monospace;font-size:18px;color:var(--kyellow);
-    text-shadow:2px 2px 0 var(--kpurple);letter-spacing:.04em;margin-bottom:10px;
-  }
-  .toc-note{
-    font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);
-    line-height:1.7;margin-bottom:12px;
-  }
-  .toc-group{margin-top:14px}
-  .toc-group-title{
-    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kpink);
-    letter-spacing:.12em;margin-bottom:6px;padding-bottom:3px;
-    border-bottom:2px dashed var(--kborder);
-  }
-  .toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
-  .toc-list a{
-    display:flex;align-items:center;justify-content:space-between;gap:8px;
-    padding:9px 12px;text-decoration:none;
-    background:var(--kdark2);border:2px solid var(--kborder);
-    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink);
-    letter-spacing:.02em;transition:transform .05s,box-shadow .05s;
-    box-shadow:var(--shadow-pixel-sm);
-  }
-  .toc-list a:active{transform:translate(2px,2px);box-shadow:none}
-  .toc-list a:hover{border-color:var(--kpink);color:#fff}
-  .toc-list .tag{
-    font-family:"DotGothic16",monospace;font-size:9.5px;letter-spacing:.06em;
-    padding:2px 7px;border:2px solid var(--kborder);color:var(--kink-soft);
-    background:var(--kdark);white-space:nowrap;
-  }
-  .toc-list .tag.here{color:var(--kdark);background:var(--kyellow);border-color:var(--kyellow)}
-  .toc-list .tag.new{color:#fff;background:var(--kpink);border-color:var(--kpink);animation:pixel-blink 1.4s steps(2,end) infinite}
-  .toc-list .tag.soon{color:var(--kink-soft);border-color:var(--kborder)}
-  .toc-list a.now{border-color:var(--kyellow);background:rgba(253,224,71,.08);color:#fff}
-  .toc-list a.new{border-color:var(--kpink);background:rgba(255,45,120,.08)}
-  .toc-list a.soon{opacity:.55;pointer-events:none;font-style:italic}
-  .toc-list a .name{flex:1}
-  .toc-list a .arrow{color:var(--kpink)}
-  .toc-list a.soon .arrow{color:var(--kink-soft)}
-
-  /* TOC bottom link (returning to top from page bottom) */
-  .toc-bottom{text-align:center;margin-top:22px}
-  .toc-bottom a{
-    display:inline-block;padding:6px 14px;
-    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kpurple);
-    text-decoration:none;border:2px solid var(--kpurple);
-    background:rgba(168,85,247,.08);box-shadow:var(--shadow-pixel-sm);
-  }
-
-  /* misc */
-  @media (prefers-reduced-motion:no-preference){
-    .hero,.card,.ana,.closing,.gcard{animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
+  @media (max-width:420px){
+    h1{font-size:28px}
+    .toc-title{font-size:18px}
+    .toc-list a{font-size:12px}
   }
 </style>
 </head>
-<body id="top">
+<body>
 
 <!-- BGM toggle -->
 <button id="bgmBtn" class="bgm-btn" aria-label="BGM ON/OFF">
@@ -652,476 +211,106 @@
     <span class="sparkle s2">✧</span>
     <span class="sparkle s3">✦</span>
     <span class="sparkle s4">✧</span>
-    <span class="eyebrow">REIWA 8 - 1ST TERM FINAL</span>
-    <h1>さらちゃんの<br><span class="pink">テスト分析</span></h1>
+    <span class="eyebrow">SARA'S LEARNING LOG</span>
+    <h1>さらの<br><span class="pink">学びログ</span></h1>
 
     <div class="rabbit-stage">
       <div class="rabbit-wrap">
         <div class="star-burst" id="starBurst"></div>
         <svg width="88" height="132" viewBox="0 0 16 24" id="rabbit-hero"></svg>
       </div>
-      <div class="rabbit-bubble big"><span class="pink">がんばったね！</span><br>けっかみてみよっ</div>
+      <div class="rabbit-bubble big"><span class="pink">ようこそ！</span><br>もくじからえらんでね〜</div>
     </div>
 
-    <p class="who pixel-sm">三宿中学校　1年E組 12番　木村さら</p>
+    <p class="who">三宿中学校　1年E組 12番　木村さら<br>令和8年度 〜 令和10年度</p>
   </header>
 
-  <!-- HERO -->
-  <div class="hero pixel-card-pink rise">
-    <span class="hero-tag">▶ 9教科 合計</span>
-    <div class="bignum"><span class="roul" data-target="728" data-duration="1800">000</span><span class="unit">点</span></div>
-    <p class="sub">学年平均 <b>522.4点</b>　＋205.6点</p>
-    <div class="rankbig">
-      <span class="lab">想定順位</span>
-      <span class="num">約<span class="roul" data-target="18" data-duration="2200" data-pad="2">00</span><small>位</small></span>
-      <span class="of">／ 約150人中</span>
-    </div>
-
-    <!-- 女子内順位を強調 -->
-    <div class="girls-rank">
-      <span class="gr-eyebrow">★ FEMALE RANK ★</span>
-      <p class="gr-lead">女子の中でみると…</p>
-      <div class="gr-bignum">
-        約<span class="roul" data-target="7" data-duration="2600" data-pad="1">0</span><small>位</small>
-      </div>
-      <p class="gr-foot">女子<b>59人</b>中　＝　<b>上位 約12%</b></p>
-    </div>
-
-    <div class="pillrow">
-      <span class="pixel-chip pink">★ 上位 10〜13%</span>
-      <span class="pixel-chip yellow">全教科 平均超え</span>
-      <span class="pixel-chip purple">推定 15〜20位</span>
-    </div>
-
-    <div class="strip">
-      <div class="strip-label"><span>合計点の人数分布</span><span>さらの位置 →</span></div>
-      <div class="track" id="totalTrack"></div>
-      <div class="axis"><span>0点</span><span>450点</span><span>900点</span></div>
-    </div>
+  <!-- Pitch -->
+  <div class="pitch">
+    <p>
+      さらの中学3年間の <b>テスト分析</b> と <b>通知表分析</b> をぜんぶ記録するページ。<br>
+      毎学期、<em>「今のさら」</em> がどこまで来たか、<em>「次のさら」</em> がどこを目指すかを見える化していくよ。
+    </p>
   </div>
 
-  <!-- ============ 目次（レポート一覧） ============ -->
-  <div class="toc" id="toc">
-    <span class="toc-eyebrow">★ TABLE OF CONTENTS ★</span>
-    <h2 class="toc-title">さらの学びログ 目次</h2>
-    <p class="toc-note">▶ 学期ごとの「テスト分析」と「通知表分析」の2本立て。<br>▶ 中1 → 中2 → 中3 と、都立入試までずっと積み上げていくよ。</p>
+  <!-- ============ 目次 ============ -->
+  <div class="toc">
+    <span class="toc-eyebrow">★ もくじ ★ TABLE OF CONTENTS</span>
+    <h2 class="toc-title">レポート一覧</h2>
+    <p class="toc-note">
+      ▶ 学期ごとに <b>「期末テスト分析」</b> と <b>「通知表分析」</b> の2本立て。<br>
+      ▶ 中1 → 中2 → 中3 と、都立入試までずっと積み上げていくよ。
+    </p>
 
     <!-- 中1 -->
     <div class="toc-group">
       <div class="toc-group-title">▶ 中学1年（令和8年度）</div>
       <ul class="toc-list">
-        <li><a class="now" href="#top"><span class="name">1学期 期末テスト分析（このページ）</span><span class="tag here">いまここ</span></a></li>
-        <li><a class="new" href="reports/y1-t1-tsuchihyo.html"><span class="name">1学期 通知表 分析＆作戦</span><span class="tag new">NEW</span></a></li>
-        <li><a class="soon" href="#"><span class="name">2学期 期末テスト分析</span><span class="tag soon">準備中</span></a></li>
-        <li><a class="soon" href="#"><span class="name">2学期 通知表 分析＆作戦</span><span class="tag soon">準備中</span></a></li>
-        <li><a class="soon" href="#"><span class="name">3学期 期末テスト分析</span><span class="tag soon">準備中</span></a></li>
-        <li><a class="soon" href="#"><span class="name">3学期 通知表 分析＆作戦</span><span class="tag soon">準備中</span></a></li>
+        <li><a class="pub" href="reports/y1-t1-test.html">
+          <span class="name">1学期　期末テスト 分析</span>
+          <span class="tag pub">公開中</span>
+        </a></li>
+        <li><a class="new" href="reports/y1-t1-tsuchihyo.html">
+          <span class="name">1学期　通知表 分析＆作戦</span>
+          <span class="tag new">NEW</span>
+        </a></li>
+        <li><a class="soon" href="#">
+          <span class="name">2学期　期末テスト 分析</span>
+          <span class="tag soon">準備中</span>
+        </a></li>
+        <li><a class="soon" href="#">
+          <span class="name">2学期　通知表 分析＆作戦</span>
+          <span class="tag soon">準備中</span>
+        </a></li>
+        <li><a class="soon" href="#">
+          <span class="name">3学期　期末テスト 分析</span>
+          <span class="tag soon">準備中</span>
+        </a></li>
+        <li><a class="soon" href="#">
+          <span class="name">3学期　通知表 分析＆作戦</span>
+          <span class="tag soon">準備中</span>
+        </a></li>
       </ul>
     </div>
 
     <!-- 中2 -->
     <div class="toc-group">
-      <div class="toc-group-title">▶ 中学2年（令和9年度）</div>
+      <div class="toc-group-title mid">▶ 中学2年（令和9年度）</div>
       <ul class="toc-list">
-        <li><a class="soon" href="#"><span class="name">1学期・2学期・3学期</span><span class="tag soon">これから</span></a></li>
+        <li><a class="soon" href="#">
+          <span class="name">1学期・2学期・3学期</span>
+          <span class="tag soon">これから</span>
+        </a></li>
       </ul>
     </div>
 
     <!-- 中3 -->
     <div class="toc-group">
-      <div class="toc-group-title">▶ 中学3年（令和10年度）— 都立入試の年</div>
+      <div class="toc-group-title goal">▶ 中学3年（令和10年度）— 都立入試の年</div>
       <ul class="toc-list">
-        <li><a class="soon" href="#"><span class="name">1学期・2学期（決戦）・3学期</span><span class="tag soon">これから</span></a></li>
+        <li><a class="soon" href="#">
+          <span class="name">1学期・2学期（決戦）・3学期</span>
+          <span class="tag soon">これから</span>
+        </a></li>
       </ul>
     </div>
   </div>
 
-  <!-- 教科別 -->
-  <section>
-    <div class="sec-head"><h2>教科ごとの結果</h2><span class="en">SUBJECTS</span></div>
-    <p class="sec-note">点数と、学年の中での位置。グラフは学年全体の人数分布で、<b>ピンク</b>がさらのいる帯です。</p>
-    <div class="legend">
-      <span><i style="background:var(--kpink)"></i>さらの位置</span>
-      <span><i style="background:var(--kpurple)"></i>学年全体（人数）</span>
-      <span><i style="background:var(--kblue)"></i>学年平均</span>
-    </div>
-    <div id="subjects"></div>
-  </section>
-
-  <!-- まとめ位置 -->
-  <section>
-    <div class="sec-head"><h2>合計でみた位置</h2><span class="en">TOTALS</span></div>
-    <p class="sec-note">3教科・5教科・9教科それぞれの合計でも、上位グループにバッチリ。</p>
-    <div id="totals"></div>
-  </section>
-
-  <!-- 男子女子 -->
-  <section>
-    <div class="sec-head"><h2>男子と女子で見ると</h2><span class="en">BOYS / GIRLS</span></div>
-    <p class="sec-note">この学年は <b>男子92人・女子59人</b>。教科ごとの男女平均差を比べました。さらは<b>女子の中での順位</b>もチェック。</p>
-    <div class="legend">
-      <span><i style="background:var(--kblue)"></i>男子の平均が上</span>
-      <span><i style="background:var(--kpink)"></i>女子の平均が上</span>
-      <span>棒＝平均点の差</span>
-    </div>
-    <div id="gender"></div>
-  </section>
-
-  <!-- 良いところ -->
-  <section>
-    <div class="sec-head"><h2>ここがすごい！</h2><span class="en">STRENGTHS</span></div>
-    <div class="ana">
-      <div class="item">
-        <div class="ic g">★</div>
-        <div><h3>言語の力がとても高い</h3>
-        <p>国語<span class="em">86点（上位約9%）</span>と外国語<span class="em">91点（最上位の帯）</span>。読む・書く・覚えるが武器。社会も、学年平均が43.7点と低い中で72点としっかり取れていて、文系の安定感バツグン。</p></div>
-      </div>
-      <div class="item">
-        <div class="ic g">★</div>
-        <div><h3>実技教科が光ってる</h3>
-        <p>美術<span class="em">83点（上位約6%）</span>と保健体育<span class="em">87点（上位約10%）</span>が学年トップクラス。内申は実技も主要教科と同じ重み。この強さは大きな武器になります。</p></div>
-      </div>
-      <div class="item">
-        <div class="ic g">★</div>
-        <div><h3>穴のないバランス型</h3>
-        <p>9教科すべてで学年平均を超えてる。苦手で大きく沈む教科がないのは、コツコツ準備できている証拠。合計728点で学年上位に入れている一番の理由です。</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- これから -->
-  <section>
-    <div class="sec-head"><h2>これから伸ばせるところ</h2><span class="en">NEXT</span></div>
-    <div class="ana">
-      <div class="item">
-        <div class="ic r">1</div>
-        <div><h3>数学 — いちばん伸びしろ</h3>
-        <p>77点で平均超えですが、5教科の中では順位がやや控えめ（<span class="em">上位約38%</span>）。70点台に42人がひしめいていて、<span class="em">あと数問で順位が一気に上がる</span>帯にいる。計算ミスや解き直しを丁寧にやると効率よく伸びます。</p></div>
-      </div>
-      <div class="item">
-        <div class="ic b">2</div>
-        <div><h3>理科 — 高得点だけど上が厚い</h3>
-        <p>87点は立派。ただ理科は学年全体の平均も高く（72.2点）、90点台が35人と上位が厚い教科。<span class="em">難しい応用問題への対応</span>が、ここから一段上がるカギ。</p></div>
-      </div>
-      <div class="item">
-        <div class="ic b">3</div>
-        <div><h3>技術・家庭 — 底上げのチャンス</h3>
-        <p>66点で、9教科のなかで平均との差がいちばん小さい教科。実技や提出物の比重も大きいので、<span class="em">提出と実技を丁寧に</span>こなすだけで、総合点（内申）の底上げにつながります。</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 総評 -->
-  <section>
-    <div class="closing">
-      <div class="closing-rabbit">
-        <svg width="56" height="84" viewBox="0 0 16 24" id="rabbit-closing" class="hop-rabbit"></svg>
-      </div>
-      <h2>★ そうひょう ★</h2>
-      <p>言語と実技という、伸ばしやすくて将来にもつながる力をしっかり持ってる。全教科で平均超え＆合計で学年上位というのは、地道に積み重ねてきた結果！　胸を張っていい成績です。<br><br>次に向けては、<b>数学の取りこぼしをへらす</b>のが一番のねらいどころ。得意な国語・外国語はこのまま伸ばし、技術家庭の提出物を丁寧に。これだけで合計順位はもう一段上がります。よく頑張りました🌱</p>
-
-      <!-- 10位に入るためには -->
-      <div class="goal-box">
-        <p class="goal-eyebrow">▶ ねらえ！学年TOP10</p>
-        <h3 class="goal-title">10位に入るためには？</h3>
-        <p class="goal-lead">いまの想定は <b>約18位</b>（728点）。<br>あと <b>8人ぬく</b> ＝ ざっくり <b>＋25〜30点</b> でトップ10ねらえる！</p>
-        <ul class="goal-list">
-          <li><span class="g-tag pink">数学</span> 77 → <b>85</b>（＋8点）／ 5教科の中で一番ぬきやすい帯にいる</li>
-          <li><span class="g-tag yellow">技術・家庭</span> 66 → <b>78</b>（＋12点）／ 提出物と実技をていねいに</li>
-          <li><span class="g-tag purple">理科</span> 87 → <b>93</b>（＋6点）／ 応用問題を1〜2問もぎとる</li>
-        </ul>
-        <p class="goal-foot">→ 合計 <b>755点くらい</b> でTOP10ゾーン突入！</p>
-      </div>
-
-      <!-- ママのプレゼント -->
-      <div class="present-box">
-        <div class="present-ribbon">🎁 SECRET</div>
-        <p class="present-msg">
-          ところで…<br>
-          <b>10位に入ったら、ママからビッグなプレゼントがあるらしいよ！？</b><br>
-          <span class="present-sub">なにかは…ヒミツ✨</span>
-        </p>
-      </div>
-
-      <p class="sig">— テスト結果より</p>
-    </div>
-  </section>
-
-  <!-- TOP 10 ねらえセクション -->
-  <section>
-    <div class="top10">
-      <div class="top10-deco-l">★</div>
-      <div class="top10-deco-r">★</div>
-      <p class="top10-badge">NEXT GOAL ⇢ TOP 10</p>
-      <h2 class="top10-title">学年TOP10に<br>入ったら…</h2>
-      <p class="top10-sub">うさぎが本気でダンス＆<br><b>ママからビッグなプレゼント</b>が待ってるらしい🎁</p>
-
-      <div class="rabbit-stage" style="margin-top:20px">
-        <div class="rabbit-wrap">
-          <div class="star-burst" id="starBurst2"></div>
-          <svg width="96" height="144" viewBox="0 0 16 24" id="rabbit-top10"></svg>
-        </div>
-        <div class="rabbit-bubble big"><span class="pink">めざせ TOP10！</span><br>おうえん してるよ〜🐰</div>
-      </div>
-    </div>
-  </section>
-
   <p class="foot">
-    ※ 学校からは正式な順位は出ていません。<br>
-    「想定 約◯位」「上位◯%」「女子内 約◯位」は、<b>配布された人数分布グラフから推定した目安</b>です。<br>
-    （学年 約150人＝男子92人・女子59人）<br>
-    実際の順位とは数番前後する場合があります。
+    ※ このサイトは家族用（noindex）。<br>
+    <b>目標：都立高校（新宿・北園・広尾・目黒 ほか）</b>
   </p>
 
 </div>
 
+<script src="assets/rabbit.js"></script>
 <script>
-/* =====================================================================
-   PIXEL RABBIT  (16x24 sprite based on eiken-pre2-drill Rabbit)
-   ===================================================================== */
-const RABBIT_COLORS = {
-  1:'#d4a574', 3:'#f5a0b5', 4:'#1a1a1a', 5:'#ffffff',
-  6:'#a06040', 7:'#ffb6c1', 8:'#f5ead6', 9:'#c47a7a'
-};
-const RABBIT_BASE = [
-  [0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],
-  [0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,0],
-  [0,0,0,1,3,3,1,0,0,1,3,3,1,0,0,0],
-  [0,0,0,1,3,3,1,0,0,1,3,3,1,0,0,0],
-  [0,0,0,1,3,3,1,0,0,1,3,3,1,0,0,0],
-  [0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,0],
-  [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-  [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-  [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-  [0,0,1,4,4,4,1,1,1,1,4,4,4,1,0,0],
-  [0,0,1,4,4,5,1,1,1,1,4,4,5,1,0,0],
-  [0,0,1,4,4,4,1,1,1,1,4,4,4,1,0,0],
-  [0,0,1,1,1,1,1,6,6,1,1,1,1,1,0,0],
-  [0,0,7,7,1,1,1,1,1,1,1,1,7,7,0,0],
-  [0,0,1,1,1,1,1,9,9,1,1,1,1,1,0,0],
-  [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-  [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-  [0,0,0,1,1,8,8,8,8,8,8,1,1,0,0,0],
-  [0,0,1,1,8,8,8,8,8,8,8,8,1,1,0,0],
-  [0,0,1,1,8,8,8,8,8,8,8,8,1,1,0,0],
-  [0,0,0,1,1,8,8,8,8,8,8,1,1,0,0,0],
-  [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-  [0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],
-  [0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0]
-];
-function applyFace(s, face){
-  if(face==='cheer'){
-    s[9]  = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
-    s[10] = [0,0,1,4,1,4,1,1,1,4,1,4,1,1,0,0];
-    s[11] = [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0];
-  } else if(face==='wink'){
-    s[9]  = [0,0,1,1,4,1,1,1,1,1,4,4,4,1,0,0];
-    s[10] = [0,0,1,4,1,4,1,1,1,1,4,4,5,1,0,0];
-    s[11] = [0,0,1,1,1,1,1,1,1,1,4,4,4,1,0,0];
-  } else if(face==='excited'){
-    s[9]  = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
-    s[10] = [0,0,1,4,1,4,1,1,1,4,1,4,1,1,0,0];
-    s[11] = [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0];
-    s[14] = [0,0,1,1,1,9,9,9,9,9,9,1,1,1,0,0];
-  } else if(face==='angry'){
-    s[9]  = [0,0,1,4,1,1,1,1,1,1,1,1,4,1,0,0];
-    s[10] = [0,0,1,1,4,1,1,1,1,1,1,4,1,1,0,0];
-    s[11] = [0,0,1,1,1,4,1,1,1,1,4,1,1,1,0,0];
-    s[14] = [0,0,1,1,1,1,9,9,9,9,1,1,1,1,0,0];
-  }
-}
-function applyPose(s, pose){
-  if(pose==='base') return s;
-  switch(pose){
-    case 'rightArm':
-      s[15][13]=1; s[14][14]=1; s[13][15]=1; break;
-    case 'leftArm':
-      s[15][2]=1; s[14][1]=1; s[13][0]=1; break;
-    case 'bothArms':
-      s[15][13]=1; s[15][2]=1;
-      s[14][14]=1; s[14][1]=1;
-      s[13][15]=1; s[13][0]=1;
-      s[22]=[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0];
-      s[23]=[0,0,0,0,1,1,1,0,0,1,1,1,0,0,0,0];
-      break;
-    case 'rightKick':
-      s[22]=[0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0];
-      s[23]=[0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0]; break;
-    case 'leftKick':
-      s[22]=[0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0];
-      s[23]=[0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0]; break;
-    case 'stepRight':
-      s[22]=[0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0];
-      s[23]=[0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0]; break;
-    case 'stepLeft':
-      s[22]=[0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0];
-      s[23]=[0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0]; break;
-    case 'crouch':
-      s[22]=[0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0];
-      s[23]=[0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0]; break;
-    case 'spin':
-      for(let y=0;y<s.length;y++) s[y].reverse();
-      break;
-  }
-  return s;
-}
-function spriteToSVG(svg, sprite){
-  let p='';
-  sprite.forEach((row,y)=>row.forEach((c,x)=>{
-    if(c>0) p += `<rect x="${x}" y="${y}" width="1" height="1" fill="${RABBIT_COLORS[c]}"/>`;
-  }));
-  svg.innerHTML = p;
-}
-function staticRabbit(svgId, mood){
-  const svg=document.getElementById(svgId); if(!svg) return;
-  const s=RABBIT_BASE.map(r=>[...r]);
-  if(mood==='cheer'){applyFace(s,'cheer'); applyPose(s,'bothArms');}
-  else if(mood==='wink'){applyFace(s,'wink');}
-  spriteToSVG(svg,s);
-}
+/* ---- init rabbits ---- */
+runDance('rabbit-hero', 'starBurst', 0);
+staticRabbit('float-rabbit-template','cheer');
+staticRabbit('float-rabbit-template2','wink');
 
-/* ---- Dance sequence (ported from eiken-pre2-drill Rabbit.tsx) ---- */
-const DANCE_SEQUENCE = [
-  {pose:'rightArm', face:'wink',    t:'translateY(-4px) rotate(4deg)'},
-  {pose:'leftArm',  face:'wink',    t:'translateY(-4px) rotate(-4deg)'},
-  {pose:'stepRight',face:'cheer',   t:'translateY(0px) rotate(3deg)'},
-  {pose:'stepLeft', face:'cheer',   t:'translateY(0px) rotate(-3deg)'},
-  {pose:'crouch',   face:'excited', t:'translateY(4px) rotate(0deg)'},
-  {pose:'bothArms', face:'excited', t:'translateY(-12px) rotate(0deg)'},
-  {pose:'base',     face:'cheer',   t:'translateY(2px) rotate(0deg)'},
-  {pose:'rightKick',face:'cheer',   t:'translateY(0px) rotate(5deg)'},
-  {pose:'leftKick', face:'cheer',   t:'translateY(0px) rotate(-5deg)'},
-  {pose:'bothArms', face:'excited', t:'translateY(-6px) rotate(0deg)'},
-  {pose:'spin',     face:'cheer',   t:'translateY(-2px) scaleX(-1)'},
-  {pose:'base',     face:'excited', t:'translateY(0px) rotate(0deg)'}
-];
-const SPIN_STARS = [
-  {x:-60,y:-50,dx:-12,dy:-10,color:'#FF2D78',s:10},
-  {x: 65,y:-40,dx: 14,dy: -8,color:'#A855F7',s: 8},
-  {x:-55,y: 40,dx:-10,dy: 12,color:'#FDE047',s:10},
-  {x: 58,y: 48,dx: 12,dy: 10,color:'#FF2D78',s: 8},
-  {x:-70,y:  5,dx:-14,dy:  0,color:'#A855F7',s:12},
-  {x: 72,y: -8,dx: 14,dy: -4,color:'#FDE047',s:10},
-  {x:  6,y:-58,dx:  0,dy:-14,color:'#FF2D78',s: 8},
-  {x:-10,y: 55,dx: -4,dy: 14,color:'#A855F7',s:12}
-];
-const STAR_PIXELS = [
-  [0,0,1,0,0],
-  [0,1,1,1,0],
-  [1,1,1,1,1],
-  [0,1,1,1,0],
-  [0,0,1,0,0]
-];
-function pixelStar(size,color){
-  let p='';
-  STAR_PIXELS.forEach((r,y)=>r.forEach((c,x)=>{
-    if(c) p += `<rect x="${x}" y="${y}" width="1" height="1" fill="${color}"/>`;
-  }));
-  return `<svg width="${size}" height="${size}" viewBox="0 0 5 5" style="display:block">${p}</svg>`;
-}
-function burstStars(id){
-  const root = document.getElementById(id || 'starBurst');
-  if(!root) return;
-  root.innerHTML = '';
-  SPIN_STARS.forEach((star,i)=>{
-    const d = document.createElement('div');
-    d.className = 's';
-    d.style.marginLeft = star.x + 'px';
-    d.style.marginTop  = star.y + 'px';
-    d.style.setProperty('--sx', star.dx + 'px');
-    d.style.setProperty('--sy', star.dy + 'px');
-    d.style.animation = `star-pop2 .7s ease-out ${i*0.04}s both`;
-    d.innerHTML = pixelStar(star.s, star.color);
-    root.appendChild(d);
-  });
-  setTimeout(()=>{ root.innerHTML=''; }, 900);
-}
-
-/* ---- Run dancing rabbits ---- */
-function runDance(svgId, burstId, offset){
-  const svg = document.getElementById(svgId);
-  if(!svg) return;
-  let i = offset || 0;
-  function tick(){
-    const frame = DANCE_SEQUENCE[i];
-    const s = RABBIT_BASE.map(r=>[...r]);
-    applyFace(s, frame.face);
-    applyPose(s, frame.pose);
-    spriteToSVG(svg, s);
-    svg.style.transform = frame.t;
-    svg.style.transition = 'transform .15s ease-out';
-    if(frame.pose === 'spin') burstStars(burstId);
-    i = (i + 1) % DANCE_SEQUENCE.length;
-  }
-  tick();
-  setInterval(tick, 250);
-}
-runDance('rabbit-hero',  'starBurst',  0);
-runDance('rabbit-top10', 'starBurst2', 5);
-
-/* =====================================================================
-   ROULETTE NUMBER ANIMATION
-   ===================================================================== */
-function startRoulette(el){
-  const target = parseInt(el.dataset.target, 10);
-  const duration = parseInt(el.dataset.duration || '1800', 10);
-  const pad = parseInt(el.dataset.pad || String(String(target).length), 10);
-  const start = performance.now();
-  el.classList.add('spinning');
-
-  function fmt(n){
-    return String(Math.max(0, Math.floor(n))).padStart(pad, '0');
-  }
-  function frame(now){
-    const t = Math.min(1, (now - start) / duration);
-    // ease-out cubic
-    const eased = 1 - Math.pow(1 - t, 3);
-    if(t < 0.65){
-      // rapid random spin in early phase
-      const range = target * 3 + 30;
-      el.textContent = fmt(Math.random() * range);
-    } else {
-      // ease toward target
-      const v = target * eased + (1-eased) * (target*1.4);
-      el.textContent = fmt(v);
-    }
-    if(t < 1){
-      requestAnimationFrame(frame);
-    } else {
-      el.textContent = fmt(target);
-      el.classList.remove('spinning');
-    }
-  }
-  requestAnimationFrame(frame);
-}
-
-(function(){
-  const targets = document.querySelectorAll('.roul');
-  // start when in view
-  if('IntersectionObserver' in window){
-    const io = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting && !e.target.dataset.spun){
-          e.target.dataset.spun = '1';
-          startRoulette(e.target);
-          io.unobserve(e.target);
-        }
-      });
-    },{threshold:0.4});
-    targets.forEach(t=>io.observe(t));
-  } else {
-    targets.forEach(t=>startRoulette(t));
-  }
-})();
-
-/* ---- Static rabbits ---- */
-staticRabbit('rabbit-closing','wink');
-staticRabbit('float-rabbit-template','happy');
-staticRabbit('float-rabbit-template2','cheer');
-
-/* =====================================================================
-   BGM
-   ===================================================================== */
+/* ---- BGM ---- */
 (function(){
   const audio = document.getElementById('bgmAudio');
   const btn   = document.getElementById('bgmBtn');
@@ -1129,7 +318,6 @@ staticRabbit('float-rabbit-template2','cheer');
   const noteG = document.getElementById('bgmNote');
   audio.volume = 0.3;
 
-  // 8-bit music note (7x8)
   const NOTE_ON = [
     [0,0,0,0,1,1,0],
     [0,0,0,1,1,1,0],
@@ -1174,9 +362,7 @@ staticRabbit('float-rabbit-template2','cheer');
       audio.pause();
     }
   }
-  // initial: try autoplay if user opted in previously
   apply();
-  // hide hint after first interaction
   function hideHint(){ hint.style.display='none'; }
 
   btn.addEventListener('click', ()=>{
@@ -1186,7 +372,6 @@ staticRabbit('float-rabbit-template2','cheer');
     hideHint();
   });
 
-  // first tap anywhere starts BGM if not yet
   document.addEventListener('pointerdown', function once(){
     if(!on){
       on = true;
@@ -1197,142 +382,7 @@ staticRabbit('float-rabbit-template2','cheer');
     document.removeEventListener('pointerdown', once);
   }, { once:true });
 })();
-
-/* =====================================================================
-   DATA
-   ===================================================================== */
-const subjects = [
-  {name:"国語",   score:86, avg:58.5, totals:[4,10,10,21,29,31,24,16,6],  me:7, avgBand:4, rank:"上位約9%",  srank:"約11位", cls:""},
-  {name:"数学",   score:77, avg:63.4, totals:[9,8,8,16,17,15,42,14,22],   me:6, avgBand:5, rank:"上位約38%", srank:"約45位", cls:"soft"},
-  {name:"外国語", score:91, avg:65.6, totals:[6,5,9,14,15,27,28,26,21],   me:8, avgBand:5, rank:"最上位の帯", srank:"約19位", cls:""},
-  {name:"社会",   score:72, avg:43.7, totals:[34,15,18,24,14,18,11,16,1], me:6, avgBand:3, rank:"上位約15%", srank:"約26位", cls:""},
-  {name:"理科",   score:87, avg:72.2, totals:[5,4,9,9,9,14,32,34,35],     me:7, avgBand:6, rank:"上位約34%", srank:"約43位", cls:"mid"},
-  {name:"音楽",   score:79, avg:50.4, totals:[18,18,22,17,16,17,19,16,8], me:6, avgBand:4, rank:"上位約22%", srank:"約26位", cls:"mid"},
-  {name:"美術",   score:83, avg:53.7, totals:[5,6,31,22,21,34,17,13,2],   me:7, avgBand:4, rank:"上位約6%",  srank:"約11位", cls:""},
-  {name:"保健体育",score:87, avg:66.0, totals:[1,3,5,12,24,38,38,29,1],    me:7, avgBand:5, rank:"上位約10%", srank:"約8位",  cls:""},
-  {name:"技術・家庭",score:66,avg:48.8,totals:[10,10,25,32,31,26,8,8,1],  me:5, avgBand:3, rank:"上位約20%", srank:"約26位", cls:"mid"},
-];
-
-/* ---- hero total strip ---- */
-const totalDist = [5,11,19,27,37,29,20,3];
-const totalMe = 6;
-(function(){
-  const max = Math.max(...totalDist);
-  const t = document.getElementById('totalTrack');
-  totalDist.forEach((v,i)=>{
-    const s = document.createElement('div');
-    s.className = 'seg' + (i===totalMe?' me':'');
-    s.style.height = (12 + v/max*46) + 'px';
-    if(i===totalMe){ s.innerHTML = '<span class="flag">さら 728</span>'; }
-    t.appendChild(s);
-  });
-})();
-
-/* ---- subject cards ---- */
-(function(){
-  const root = document.getElementById('subjects');
-  subjects.forEach(s=>{
-    const max = Math.max(...s.totals);
-    const gap = (s.score - s.avg).toFixed(1);
-    let bars = '';
-    s.totals.forEach((v,i)=>{
-      const h = (v/max*100);
-      bars += `<div class="b${i===s.me?' me':''}" style="height:${Math.max(h,4)}%"></div>`;
-    });
-    const leftPct = ((s.avgBand + 0.5) / 9) * 100;
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="c-top">
-        <span class="c-name">${s.name}</span>
-        <span class="c-rank ${s.cls}">${s.rank}</span>
-      </div>
-      <div class="c-score">
-        <span class="pt">${s.score}<small>点</small></span>
-        <span class="avg">平均 ${s.avg}</span>
-        <span class="gap">＋${gap}</span>
-        <span class="srank">想定 ${s.srank}</span>
-      </div>
-      <div class="mini">
-        <div class="mbars">${bars}
-          <div class="avgline" style="left:${leftPct}%"><span>平均</span></div>
-        </div>
-        <div class="mfoot"><span>0点</span><span>100点</span></div>
-      </div>`;
-    root.appendChild(card);
-  });
-})();
-
-/* ---- totals ---- */
-const totalsData = [
-  {name:"3教科 合計", note:"国語・数学・外国語", score:254, avg:187.5, rank:"想定 約20位", grank:"約8位", dist:[10,3,13,7,19,29,28,20,14,8], me:8},
-  {name:"5教科 合計", note:"＋社会・理科",       score:413, avg:303.4, rank:"想定 約22位", grank:"約8位", dist:[6,8,11,16,27,30,25,22,6],    me:7},
-  {name:"9教科 合計", note:"すべての教科",       score:728, avg:522.4, rank:"想定 約18位", grank:"約7位", dist:[5,11,19,27,37,29,20,3],      me:6},
-];
-(function(){
-  const root = document.getElementById('totals');
-  totalsData.forEach(s=>{
-    const max = Math.max(...s.dist);
-    const gap = (s.score - s.avg).toFixed(1);
-    let bars='';
-    s.dist.forEach((v,i)=>{
-      const h=(v/max*100);
-      bars += `<div class="b${i===s.me?' me':''}" style="height:${Math.max(h,4)}%"></div>`;
-    });
-    const card=document.createElement('div');
-    card.className='card';
-    card.innerHTML=`
-      <div class="c-top">
-        <span class="c-name">${s.name}<span style="font-size:10.5px;color:var(--kink-soft);margin-left:6px">${s.note}</span></span>
-        <span class="c-rank">${s.rank}</span>
-      </div>
-      <div class="c-score">
-        <span class="pt">${s.score}<small>点</small></span>
-        <span class="avg">平均 ${s.avg}</span>
-        <span class="gap">＋${gap}</span>
-        <span class="srank">女子内 ${s.grank}</span>
-      </div>
-      <div class="mini"><div class="mbars">${bars}</div></div>`;
-    root.appendChild(card);
-  });
-})();
-
-/* ---- gender ---- */
-const gender = [
-  {n:"国語",   m:56, f:62, gap:6,  lead:"f", s:86, gr:"約6位"},
-  {n:"数学",   m:65, f:60, gap:5,  lead:"m", s:77, gr:"約14位"},
-  {n:"外国語", m:64, f:69, gap:5,  lead:"f", s:91, gr:"約9位"},
-  {n:"社会",   m:46, f:40, gap:6,  lead:"m", s:72, gr:"約10位"},
-  {n:"理科",   m:73, f:70, gap:2,  lead:"m", s:87, gr:"約14位"},
-  {n:"音楽",   m:46, f:57, gap:11, lead:"f", s:79, gr:"約14位"},
-  {n:"美術",   m:51, f:59, gap:8,  lead:"f", s:83, gr:"約6位"},
-  {n:"保健体育",m:65, f:67, gap:1,  lead:"f", s:87, gr:"約3位"},
-  {n:"技術・家庭",m:48,f:50, gap:2,  lead:"f", s:66, gr:"約10位"},
-];
-(function(){
-  const maxGap = 11;
-  const root = document.getElementById('gender');
-  gender.forEach(g=>{
-    const w = Math.max(Math.abs(g.gap)/maxGap*50, 4);
-    const fill = g.lead==='f'
-      ? `<div class="dfill f" style="left:50%;width:${w}%"></div>`
-      : `<div class="dfill m" style="right:50%;width:${w}%"></div>`;
-    const lead = g.lead==='f'
-      ? `<span class="g-lead f">女子が +${g.gap}</span>`
-      : `<span class="g-lead m">男子が +${g.gap}</span>`;
-    const card = document.createElement('div');
-    card.className = 'gcard';
-    card.innerHTML = `
-      <div class="g-top"><span class="g-name">${g.n}</span>${lead}</div>
-      <div class="dbar"><div class="dcenter"></div>${fill}</div>
-      <div class="g-stats">
-        <span class="chip m">男子 ${g.m}</span>
-        <span class="chip f">女子 ${g.f}</span>
-        <span class="chip s">さら ${g.s}点・女子内 ${g.gr}</span>
-      </div>`;
-    root.appendChild(card);
-  });
-})();
 </script>
+
 </body>
 </html>
