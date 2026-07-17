@@ -555,13 +555,78 @@
     width:0;height:0;border:6px solid transparent;border-bottom-color:var(--kdark);
   }
 
+  /* ===== TOC (レポート一覧) ===== */
+  .toc{
+    margin:22px 0 8px;padding:18px 16px 14px;
+    background:
+      repeating-linear-gradient(45deg,rgba(168,85,247,.06) 0 10px,transparent 10px 20px),
+      var(--kcard);
+    border:3px solid var(--kpurple);
+    box-shadow:var(--shadow-pixel);
+    position:relative;
+  }
+  .toc-eyebrow{
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:10.5px;
+    color:#fff;background:var(--kpurple);
+    padding:3px 10px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+    letter-spacing:.16em;margin-bottom:10px;
+  }
+  .toc-title{
+    font-family:"DotGothic16",monospace;font-size:18px;color:var(--kyellow);
+    text-shadow:2px 2px 0 var(--kpurple);letter-spacing:.04em;margin-bottom:10px;
+  }
+  .toc-note{
+    font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);
+    line-height:1.7;margin-bottom:12px;
+  }
+  .toc-group{margin-top:14px}
+  .toc-group-title{
+    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kpink);
+    letter-spacing:.12em;margin-bottom:6px;padding-bottom:3px;
+    border-bottom:2px dashed var(--kborder);
+  }
+  .toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+  .toc-list a{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:9px 12px;text-decoration:none;
+    background:var(--kdark2);border:2px solid var(--kborder);
+    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink);
+    letter-spacing:.02em;transition:transform .05s,box-shadow .05s;
+    box-shadow:var(--shadow-pixel-sm);
+  }
+  .toc-list a:active{transform:translate(2px,2px);box-shadow:none}
+  .toc-list a:hover{border-color:var(--kpink);color:#fff}
+  .toc-list .tag{
+    font-family:"DotGothic16",monospace;font-size:9.5px;letter-spacing:.06em;
+    padding:2px 7px;border:2px solid var(--kborder);color:var(--kink-soft);
+    background:var(--kdark);white-space:nowrap;
+  }
+  .toc-list .tag.here{color:var(--kdark);background:var(--kyellow);border-color:var(--kyellow)}
+  .toc-list .tag.new{color:#fff;background:var(--kpink);border-color:var(--kpink);animation:pixel-blink 1.4s steps(2,end) infinite}
+  .toc-list .tag.soon{color:var(--kink-soft);border-color:var(--kborder)}
+  .toc-list a.now{border-color:var(--kyellow);background:rgba(253,224,71,.08);color:#fff}
+  .toc-list a.new{border-color:var(--kpink);background:rgba(255,45,120,.08)}
+  .toc-list a.soon{opacity:.55;pointer-events:none;font-style:italic}
+  .toc-list a .name{flex:1}
+  .toc-list a .arrow{color:var(--kpink)}
+  .toc-list a.soon .arrow{color:var(--kink-soft)}
+
+  /* TOC bottom link (returning to top from page bottom) */
+  .toc-bottom{text-align:center;margin-top:22px}
+  .toc-bottom a{
+    display:inline-block;padding:6px 14px;
+    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kpurple);
+    text-decoration:none;border:2px solid var(--kpurple);
+    background:rgba(168,85,247,.08);box-shadow:var(--shadow-pixel-sm);
+  }
+
   /* misc */
   @media (prefers-reduced-motion:no-preference){
     .hero,.card,.ana,.closing,.gcard{animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
   }
 </style>
 </head>
-<body>
+<body id="top">
 
 <!-- BGM toggle -->
 <button id="bgmBtn" class="bgm-btn" aria-label="BGM ON/OFF">
@@ -632,6 +697,42 @@
       <div class="strip-label"><span>合計点の人数分布</span><span>さらの位置 →</span></div>
       <div class="track" id="totalTrack"></div>
       <div class="axis"><span>0点</span><span>450点</span><span>900点</span></div>
+    </div>
+  </div>
+
+  <!-- ============ 目次（レポート一覧） ============ -->
+  <div class="toc" id="toc">
+    <span class="toc-eyebrow">★ TABLE OF CONTENTS ★</span>
+    <h2 class="toc-title">さらの学びログ 目次</h2>
+    <p class="toc-note">▶ 学期ごとの「テスト分析」と「通知表分析」の2本立て。<br>▶ 中1 → 中2 → 中3 と、都立入試までずっと積み上げていくよ。</p>
+
+    <!-- 中1 -->
+    <div class="toc-group">
+      <div class="toc-group-title">▶ 中学1年（令和8年度）</div>
+      <ul class="toc-list">
+        <li><a class="now" href="#top"><span class="name">1学期 期末テスト分析（このページ）</span><span class="tag here">いまここ</span></a></li>
+        <li><a class="new" href="reports/y1-t1-tsuchihyo.html"><span class="name">1学期 通知表 分析＆作戦</span><span class="tag new">NEW</span></a></li>
+        <li><a class="soon" href="#"><span class="name">2学期 期末テスト分析</span><span class="tag soon">準備中</span></a></li>
+        <li><a class="soon" href="#"><span class="name">2学期 通知表 分析＆作戦</span><span class="tag soon">準備中</span></a></li>
+        <li><a class="soon" href="#"><span class="name">3学期 期末テスト分析</span><span class="tag soon">準備中</span></a></li>
+        <li><a class="soon" href="#"><span class="name">3学期 通知表 分析＆作戦</span><span class="tag soon">準備中</span></a></li>
+      </ul>
+    </div>
+
+    <!-- 中2 -->
+    <div class="toc-group">
+      <div class="toc-group-title">▶ 中学2年（令和9年度）</div>
+      <ul class="toc-list">
+        <li><a class="soon" href="#"><span class="name">1学期・2学期・3学期</span><span class="tag soon">これから</span></a></li>
+      </ul>
+    </div>
+
+    <!-- 中3 -->
+    <div class="toc-group">
+      <div class="toc-group-title">▶ 中学3年（令和10年度）— 都立入試の年</div>
+      <ul class="toc-list">
+        <li><a class="soon" href="#"><span class="name">1学期・2学期（決戦）・3学期</span><span class="tag soon">これから</span></a></li>
+      </ul>
     </div>
   </div>
 

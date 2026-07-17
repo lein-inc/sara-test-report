@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>さらちゃんの通知表分析 ｜ 1年 1学期</title>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kpink:#FF2D78;
+    --kpink-deep:#C8195A;
+    --kpurple:#A855F7;
+    --kyellow:#FDE047;
+    --kgreen:#10B981;
+    --kblue:#60A5FA;
+    --kdark:#0f0f23;
+    --kdark2:#15153a;
+    --kcard:#1a1a3e;
+    --kcard2:#222252;
+    --kborder:#4a4a6a;
+    --kink:#f0e9ff;
+    --kink-soft:#a5a0c8;
+    --shadow-pixel:4px 4px 0 #000;
+    --shadow-pixel-lg:6px 6px 0 #000;
+    --shadow-pixel-sm:2px 2px 0 #000;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Zen Kaku Gothic New",system-ui,sans-serif;
+    background:var(--kdark);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255,45,120,.12) 0, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(168,85,247,.12) 0, transparent 45%),
+      radial-gradient(circle at 50% 95%, rgba(253,224,71,.08) 0, transparent 40%);
+    background-attachment:fixed;
+    color:var(--kink);
+    line-height:1.85;
+    letter-spacing:.02em;
+    padding-bottom:48px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px}
+  .pixel{font-family:"DotGothic16",monospace;letter-spacing:.04em;text-shadow:2px 2px 0 rgba(0,0,0,.7)}
+
+  /* Header */
+  header{padding:36px 0 20px;text-align:center;position:relative}
+  .eyebrow{
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kyellow);letter-spacing:.16em;margin-bottom:14px;
+    padding:4px 12px;border:2px solid var(--kyellow);box-shadow:var(--shadow-pixel-sm);
+    background:rgba(253,224,71,.08);
+  }
+  h1{
+    font-family:"DotGothic16",monospace;font-size:30px;line-height:1.3;
+    color:#fff;text-shadow:3px 3px 0 var(--kpink),6px 6px 0 #000;
+    letter-spacing:.04em;
+  }
+  h1 .pink{color:var(--kpink);text-shadow:3px 3px 0 #fff,6px 6px 0 #000}
+  .who{font-family:"DotGothic16",monospace;font-size:11.5px;color:var(--kink-soft);margin-top:16px}
+  .back-link{
+    display:inline-block;margin-top:14px;
+    font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kpurple);text-decoration:none;
+    padding:4px 12px;border:2px solid var(--kpurple);box-shadow:var(--shadow-pixel-sm);
+    background:rgba(168,85,247,.08);
+  }
+  .back-link:active{transform:translate(2px,2px);box-shadow:none}
+
+  /* Card base */
+  .pixel-card{
+    background:var(--kcard);border:3px solid #fff;box-shadow:var(--shadow-pixel);
+    padding:18px 16px;margin:14px 0;
+  }
+  .pixel-card.pink{border-color:var(--kpink)}
+  .pixel-card.yellow{border-color:var(--kyellow)}
+  .pixel-card.purple{border-color:var(--kpurple)}
+  .pixel-card.green{border-color:var(--kgreen)}
+
+  /* Section head */
+  .sec-head{
+    display:flex;align-items:baseline;gap:10px;justify-content:space-between;
+    margin:32px 0 12px;padding-bottom:6px;border-bottom:2px dashed var(--kborder);
+  }
+  .sec-head h2{
+    font-family:"DotGothic16",monospace;font-size:18px;color:var(--kyellow);
+    text-shadow:2px 2px 0 var(--kpink);letter-spacing:.04em;
+  }
+  .sec-head .en{
+    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink-soft);
+    letter-spacing:.16em;
+  }
+  .sec-note{
+    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink-soft);
+    line-height:1.7;margin-bottom:12px;
+  }
+
+  /* Hero summary */
+  .hero{
+    background:linear-gradient(160deg,var(--kcard),var(--kcard2));
+    border:3px solid var(--kpink);box-shadow:var(--shadow-pixel-lg);
+    padding:22px 20px;text-align:center;position:relative;
+  }
+  .hero .tag{
+    font-family:"DotGothic16",monospace;font-size:11px;color:var(--kpink);
+    letter-spacing:.16em;
+  }
+  .hero .bignum{
+    font-family:"DotGothic16",monospace;font-size:56px;color:var(--kyellow);
+    text-shadow:3px 3px 0 var(--kpink),6px 6px 0 #000;
+    margin:8px 0 4px;letter-spacing:.02em;
+  }
+  .hero .bignum small{font-size:22px;color:#fff;margin-left:6px}
+  .hero .sub{
+    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink);
+    line-height:1.7;
+  }
+  .hero .sub b{color:var(--kpink);font-weight:400}
+  .chips{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .chip{
+    font-family:"DotGothic16",monospace;font-size:11px;padding:4px 10px;
+    border:2px solid;box-shadow:var(--shadow-pixel-sm);background:var(--kdark2);
+    letter-spacing:.04em;
+  }
+  .chip.pink{color:var(--kpink);border-color:var(--kpink)}
+  .chip.yellow{color:var(--kyellow);border-color:var(--kyellow)}
+  .chip.purple{color:var(--kpurple);border-color:var(--kpurple)}
+  .chip.green{color:var(--kgreen);border-color:var(--kgreen)}
+  .chip.blue{color:var(--kblue);border-color:var(--kblue)}
+
+  /* 内申バー */
+  .naishin-bar{
+    margin-top:18px;padding:14px 12px;background:var(--kdark2);
+    border:2px solid var(--kborder);
+  }
+  .nb-title{font-family:"DotGothic16",monospace;font-size:12px;color:var(--kyellow);margin-bottom:8px;text-align:left}
+  .nb-track{position:relative;height:22px;background:var(--kdark);border:2px solid var(--kborder)}
+  .nb-fill{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--kpurple),var(--kpink),var(--kyellow));border-right:2px solid #fff}
+  .nb-mark{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--kyellow)}
+  .nb-axis{display:flex;justify-content:space-between;margin-top:4px;font-family:"DotGothic16",monospace;font-size:9.5px;color:var(--kink-soft)}
+  .nb-note{margin-top:8px;font-family:"DotGothic16",monospace;font-size:11px;color:var(--kink);line-height:1.7;text-align:left}
+  .nb-note b{color:var(--kpink);font-weight:400}
+
+  /* Q&A block */
+  .qa{padding:16px 14px}
+  .qa .qmark{
+    display:inline-block;font-family:"DotGothic16",monospace;font-size:14px;
+    color:var(--kdark);background:var(--kyellow);
+    padding:2px 8px;border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+    margin-bottom:8px;letter-spacing:.08em;
+  }
+  .qa h3{
+    font-family:"DotGothic16",monospace;font-size:15px;color:#fff;
+    text-shadow:2px 2px 0 var(--kpink);margin-bottom:10px;line-height:1.5;
+  }
+  .qa p{font-family:"DotGothic16",monospace;font-size:12.5px;line-height:1.9;color:var(--kink)}
+  .qa p b{color:var(--kyellow);font-weight:400}
+  .qa .em{color:var(--kpink)}
+
+  .tori{
+    margin-top:12px;padding:10px 12px;background:var(--kdark2);
+    border:2px dashed var(--kpink);
+    font-family:"DotGothic16",monospace;font-size:11.5px;color:var(--kink);line-height:1.8;
+  }
+  .tori b{color:var(--kyellow);font-weight:400}
+
+  /* 教科別テーブル */
+  .subj-tbl{
+    width:100%;border-collapse:separate;border-spacing:0;
+    font-family:"DotGothic16",monospace;font-size:11.5px;
+    background:var(--kdark2);border:2px solid var(--kborder);
+  }
+  .subj-tbl th,.subj-tbl td{
+    padding:6px 6px;text-align:center;border-bottom:1px solid var(--kborder);border-right:1px solid var(--kborder);
+    color:#fff;
+  }
+  .subj-tbl th{background:var(--kcard);color:var(--kyellow);letter-spacing:.04em}
+  .subj-tbl th:last-child,.subj-tbl td:last-child{border-right:none}
+  .subj-tbl tr:last-child td{border-bottom:none}
+  .subj-tbl td.subj{text-align:left;padding-left:9px;color:var(--kink);font-size:12px}
+  .subj-tbl .cell-A{background:rgba(16,185,129,.18);color:var(--kgreen);font-weight:700}
+  .subj-tbl .cell-B{background:rgba(96,165,250,.14);color:var(--kblue);font-weight:700}
+  .subj-tbl .cell-C{background:rgba(255,45,120,.18);color:var(--kpink);font-weight:700}
+  .subj-tbl .hyoutei{background:var(--kdark);font-size:14px;color:var(--kyellow);text-shadow:1.5px 1.5px 0 var(--kpink);font-weight:700;padding:4px 4px}
+  .subj-tbl .hyoutei.up{color:var(--kpink)}
+
+  /* 教科別作戦 */
+  .plan-item{
+    margin:10px 0;padding:12px 14px;background:var(--kdark2);
+    border:2px solid var(--kborder);
+  }
+  .plan-item.up1{border-color:var(--kpink)}
+  .plan-item.up2{border-color:var(--kyellow)}
+  .plan-item.top{border-color:var(--kpurple)}
+  .plan-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+  .plan-name{font-family:"DotGothic16",monospace;font-size:14px;color:#fff;text-shadow:1.5px 1.5px 0 var(--kpink);letter-spacing:.04em}
+  .plan-goal{
+    font-family:"DotGothic16",monospace;font-size:10.5px;
+    padding:2px 8px;border:2px solid var(--kyellow);color:var(--kyellow);
+    background:rgba(253,224,71,.1);letter-spacing:.06em;
+  }
+  .plan-obs{font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);margin-bottom:6px;letter-spacing:.04em}
+  .plan-obs b{color:var(--kink);font-weight:400}
+  .plan-do{font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink);line-height:1.85}
+  .plan-do b{color:var(--kpink);font-weight:400}
+
+  /* 態度A戦略リスト（恥ずかしがり屋向け） */
+  .shy-list{list-style:none;padding:0;margin:12px 0}
+  .shy-list li{
+    padding:12px 14px 12px 46px;margin-bottom:8px;
+    background:var(--kdark2);border:2px solid var(--kpurple);
+    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink);line-height:1.75;
+    position:relative;
+  }
+  .shy-list li::before{
+    content:attr(data-n);position:absolute;left:10px;top:10px;
+    width:26px;height:26px;background:var(--kpurple);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"DotGothic16",monospace;font-size:14px;
+    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+  }
+  .shy-list li b{color:var(--kyellow);font-weight:400}
+  .shy-list li em{font-style:normal;color:var(--kpink)}
+
+  /* 7つの習慣 */
+  .habits{list-style:none;padding:0;margin:12px 0;display:grid;grid-template-columns:1fr;gap:8px}
+  .habits li{
+    background:var(--kdark2);border:2px solid var(--kgreen);
+    padding:10px 12px 10px 42px;position:relative;
+    font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink);line-height:1.7;
+  }
+  .habits li::before{
+    content:attr(data-n);position:absolute;left:8px;top:8px;
+    width:24px;height:24px;background:var(--kgreen);color:#000;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"DotGothic16",monospace;font-size:13px;font-weight:700;
+    border:2px solid #fff;box-shadow:var(--shadow-pixel-sm);
+  }
+  .habits li b{color:var(--kyellow);font-weight:400}
+
+  /* モチベーション */
+  .moti{
+    background:linear-gradient(160deg,var(--kcard),var(--kcard2));
+    border:3px solid var(--kyellow);box-shadow:var(--shadow-pixel-lg);
+    padding:22px 20px;margin:20px 0;position:relative;
+  }
+  .moti h2{
+    font-family:"DotGothic16",monospace;font-size:20px;color:var(--kyellow);
+    text-shadow:2px 2px 0 var(--kpink);margin-bottom:14px;letter-spacing:.04em;
+  }
+  .moti p{font-family:"DotGothic16",monospace;font-size:13px;color:var(--kink);line-height:2;margin-bottom:10px}
+  .moti p b{color:var(--kpink);font-weight:400}
+  .moti p em{font-style:normal;color:var(--kyellow)}
+  .moti .sig{
+    margin-top:12px;font-family:"DotGothic16",monospace;font-size:11px;
+    color:var(--kink-soft);text-align:right;
+  }
+
+  /* ロードマップ */
+  .roadmap{margin:14px 0}
+  .rm-row{
+    display:grid;grid-template-columns:100px 1fr;gap:10px;
+    padding:12px 12px;background:var(--kdark2);border:2px solid var(--kborder);
+    margin-bottom:8px;align-items:center;
+  }
+  .rm-row.now{border-color:var(--kpink)}
+  .rm-row.mid{border-color:var(--kyellow)}
+  .rm-row.goal{border-color:var(--kgreen)}
+  .rm-when{font-family:"DotGothic16",monospace;font-size:11.5px;color:var(--kyellow);letter-spacing:.04em;line-height:1.5}
+  .rm-what{font-family:"DotGothic16",monospace;font-size:12px;color:var(--kink);line-height:1.75}
+  .rm-what b{color:var(--kpink);font-weight:400}
+  .rm-what .num{color:var(--kyellow)}
+
+  /* Foot */
+  .foot{
+    font-family:"DotGothic16",monospace;font-size:10.5px;color:var(--kink-soft);
+    line-height:1.8;margin-top:28px;text-align:center;
+  }
+  .foot b{color:var(--kink)}
+  .back-bottom{text-align:center;margin-top:24px}
+
+  /* small tweaks */
+  @media (max-width:420px){
+    h1{font-size:24px}
+    .hero .bignum{font-size:44px}
+    .rm-row{grid-template-columns:80px 1fr}
+    .subj-tbl{font-size:10.5px}
+    .subj-tbl th,.subj-tbl td{padding:5px 3px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">REPORT CARD - Y1 / TERM 1</span>
+    <h1>さらちゃんの<br><span class="pink">通知表</span>ぶんせき</h1>
+    <p class="who">三宿中学校　1年E組 12番　木村さら　／　令和8年 1学期</p>
+    <a class="back-link" href="../index.html">← 期末テスト分析にもどる</a>
+  </header>
+
+  <!-- ============ HERO SUMMARY ============ -->
+  <div class="hero">
+    <span class="tag">▶ 9教科 評定合計</span>
+    <div class="bignum">32<small>/45</small></div>
+    <p class="sub">
+      平均 <b>3.6</b>　／　4以上の教科 <b>5つ</b>　／　欠席・遅刻・早退 <b>ゼロ</b>
+    </p>
+
+    <div class="chips">
+      <span class="chip pink">★ 4以上 5教科</span>
+      <span class="chip yellow">★ 皆勤（71/71日）</span>
+      <span class="chip purple">★ 特別活動：国語係</span>
+      <span class="chip blue">★ 部活動：ダンス</span>
+    </div>
+
+    <!-- 換算内申バー -->
+    <div class="naishin-bar">
+      <div class="nb-title">▶ 都立高校 換算内申（1学期時点の目安）</div>
+      <div class="nb-track">
+        <div class="nb-fill" style="width:70.8%"></div>
+        <div class="nb-mark" style="left:70.8%"></div>
+      </div>
+      <div class="nb-axis"><span>0</span><span>30</span><span>46</span><span>65</span></div>
+      <p class="nb-note">
+        5教科(18) ＋ 実技4教科(14)×2 ＝ <b>46 / 65</b><br>
+        中堅上位の都立（北園・目黒・広尾クラス）に手が届くライン。<br>
+        中3で <b>50〜55</b> まで伸ばせれば進学指導推進校（新宿・駒場ほか）圏内。
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ Q&A: AAAなのに4問題 ============ -->
+  <section>
+    <div class="sec-head"><h2>ママの疑問にこたえる</h2><span class="en">FAQ</span></div>
+
+    <div class="pixel-card yellow qa">
+      <span class="qmark">？ Q1</span>
+      <h3>3つの観点ぜんぶAなのに、<br>なんで評定が5じゃなくて4なの？</h3>
+      <p>
+        答えは <b>「達成度％のスケールの違い」</b> です。<br><br>
+        通知表のうらを見てください。観点別の <em>A</em> は <b>80〜100%</b> と <b>20%も幅</b> があるのに、評定の <em>5</em> は <b>90〜100%</b> の <b>10%しかない</b>のです。<br><br>
+        つまり <b>3観点ぜんぶAでも、達成度が80〜89%の帯にとどまっていると評定は4</b>。<br>
+        Cにいるわけでも、Bにいるわけでもありません。<em>90%ラインまで、あと数点</em> という位置にいる、ということ。
+      </p>
+      <div class="tori">
+        ▶ さらの美術（AAA→4）と英語（AAA→4）は、<br>
+        　<b>「あと数点で5」</b>のいちばん上位ゾーンにいる、という意味。
+      </div>
+    </div>
+
+    <div class="pixel-card purple qa">
+      <span class="qmark">？ Q2</span>
+      <h3>さらは手を挙げるタイプじゃないのに、<br>「主体的に取り組む態度」は取れるの？</h3>
+      <p>
+        答えは <b>「取れます」</b>。<br><br>
+        中学の「主体的に取り組む態度」は、<em>発言だけ</em>で決まりません。文科省の指導要領でも、態度は <b>「粘り強く学ぶ姿勢」＋「自己調整する力」</b> の2つで見ることになっています。<br><br>
+        つまり、静かでも <b>ノート・振り返りシート・提出物・小テストの直し・タブレット提出</b> の中身が濃ければ、態度Aは十分にねらえるということ。
+      </p>
+      <div class="tori">
+        ▶ 数学 <b>知B・思A・態A</b>、<br>技家 <b>知B・思A・態A</b> ですでに証明ずみ！<br>
+        　さらは <em>ちゃんと態度Aを取れる子</em> なんです。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 教科別 一覧テーブル ============ -->
+  <section>
+    <div class="sec-head"><h2>教科ごとに見てみる</h2><span class="en">SUBJECTS</span></div>
+    <p class="sec-note">▶ <b style="color:var(--kgreen)">A</b>＝80〜100% ／ <b style="color:var(--kblue)">B</b>＝50〜79% ／ 評定は <b style="color:var(--kyellow)">5</b>=90〜100% <b style="color:var(--kyellow)">4</b>=80〜89% <b style="color:var(--kyellow)">3</b>=50〜79%</p>
+
+    <table class="subj-tbl">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding-left:9px">教科</th>
+          <th>知識<br>技能</th>
+          <th>思考<br>判断</th>
+          <th>主体<br>態度</th>
+          <th>評定</th>
+          <th>次の<br>目標</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="subj">国語</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="cell-B">B</td><td class="hyoutei">4</td><td class="hyoutei up">5</td></tr>
+        <tr><td class="subj">社会</td><td class="cell-B">B</td><td class="cell-A">A</td><td class="cell-B">B</td><td class="hyoutei">3</td><td class="hyoutei up">4</td></tr>
+        <tr><td class="subj">数学</td><td class="cell-B">B</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="hyoutei">3</td><td class="hyoutei up">4</td></tr>
+        <tr><td class="subj">理科</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="cell-B">B</td><td class="hyoutei">4</td><td class="hyoutei up">5</td></tr>
+        <tr><td class="subj">音楽</td><td class="cell-B">B</td><td class="cell-B">B</td><td class="cell-B">B</td><td class="hyoutei">3</td><td class="hyoutei up">4</td></tr>
+        <tr><td class="subj">美術</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="hyoutei">4</td><td class="hyoutei up">5</td></tr>
+        <tr><td class="subj">保健体育</td><td class="cell-A">A</td><td class="cell-B">B</td><td class="cell-A">A</td><td class="hyoutei">4</td><td class="hyoutei up">5</td></tr>
+        <tr><td class="subj">技術・家庭</td><td class="cell-B">B</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="hyoutei">3</td><td class="hyoutei up">4</td></tr>
+        <tr><td class="subj">英語（外国語）</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="cell-A">A</td><td class="hyoutei">4</td><td class="hyoutei up">5</td></tr>
+      </tbody>
+    </table>
+    <p class="sec-note" style="margin-top:12px">
+      ▶ Bが1つでもあると評定はほぼ4止まり。<br>▶ 全部Aでも90%ラインを超えないと5にならない。<br>▶ 逆に言えば「<b>Bを1つずつAに変えるだけ</b>」で内申は毎学期グッと上がる。
+    </p>
+  </section>
+
+  <!-- ============ 教科別 作戦 ============ -->
+  <section>
+    <div class="sec-head"><h2>教科ごとの作戦</h2><span class="en">PLAN</span></div>
+    <p class="sec-note">▶ Bの観点をピンポイントでAに引き上げる、無駄のない作戦。</p>
+
+    <div class="plan-item up1">
+      <div class="plan-head"><span class="plan-name">国語　4 → 5</span><span class="plan-goal">態度Bを埋める</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>主体B</b>／ 国語係の強みを評価に変える</p>
+      <p class="plan-do">
+        ・毎授業の <b>振り返り欄</b> に「学んだこと＋自分なりの疑問」を1行必ず書く<br>
+        ・漢字小テストは <b>連続満点</b> ねらい<br>
+        ・国語係として <b>プリント配布・板書写しの声かけ</b> を積極的に（役割で態度が見える）
+      </p>
+    </div>
+
+    <div class="plan-item up1">
+      <div class="plan-head"><span class="plan-name">社会　3 → 4</span><span class="plan-goal">知識B・態度Bの二重底上げ</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>知識B・主体B</b>／ いちばん伸びしろの大きい教科</p>
+      <p class="plan-do">
+        ・一問一答／地図帳／年表を <b>毎日5分ルーティン</b><br>
+        ・ワークは <b>答えを写さず自分の言葉</b> でまとめる（思考A維持に効く）<br>
+        ・地図・資料問題の練習を毎週1回
+      </p>
+    </div>
+
+    <div class="plan-item up1">
+      <div class="plan-head"><span class="plan-name">数学　3 → 4</span><span class="plan-goal">知識Bだけ、あと少し</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>知識Bだけ</b>／ 思考・態度はすでにA！</p>
+      <p class="plan-do">
+        ・小テストは <b>100点連発</b>（80%を超えれば知識A）<br>
+        ・計算ミスゼロ運動：見直しを必ず1周<br>
+        ・教科書の練習問題を <b>全問解く</b>（応用より基本を落とさない）
+      </p>
+    </div>
+
+    <div class="plan-item up2">
+      <div class="plan-head"><span class="plan-name">理科　4 → 5</span><span class="plan-goal">態度Bを埋める</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>主体B</b>／ 知識・思考はすでにA</p>
+      <p class="plan-do">
+        ・実験レポートの <b>考察を必ず2行以上</b> 書く<br>
+        ・グループ実験で <b>記録係・発表係</b> の役割を取りに行く<br>
+        ・「気になった疑問」を振り返りに書き添える
+      </p>
+    </div>
+
+    <div class="plan-item up1">
+      <div class="plan-head"><span class="plan-name">音楽　3 → 4</span><span class="plan-goal">全観点B脱出</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>すべてB</b>／ 一番むずかしいが方法はある</p>
+      <p class="plan-do">
+        ・音楽用語のペーパーテストで満点を取る（知識A）<br>
+        ・リコーダー・歌は <b>家で録音→聞き返し</b> → 実技提出は自信もって<br>
+        ・鑑賞の感想を <b>「なぜそう感じたか」まで</b> 書く（思考A）
+      </p>
+    </div>
+
+    <div class="plan-item top">
+      <div class="plan-head"><span class="plan-name">美術　4 → 5</span><span class="plan-goal">AAAの帯を90%超えへ</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>特になし。全観点80台後半</b> → もう一歩で5</p>
+      <p class="plan-do">
+        ・完成作品だけでなく <b>アイデアスケッチ・下書き</b> も提出<br>
+        ・作品カードに <b>「工夫したところ」</b> を3つ書く（思考評価が上がる）<br>
+        ・鑑賞レポートは自分の言葉で
+      </p>
+    </div>
+
+    <div class="plan-item up2">
+      <div class="plan-head"><span class="plan-name">保健体育　4 → 5</span><span class="plan-goal">思考Bを埋める</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>思考B</b>／ 知識・態度はすでにA</p>
+      <p class="plan-do">
+        ・保健分野のワークに <b>「なぜそうなるか」の理由</b> を書き足す<br>
+        ・振り返りシートに <b>次回の課題</b> を書く（自己調整＝思考評価対象）<br>
+        ・実技は動画で自分のフォームを確認
+      </p>
+    </div>
+
+    <div class="plan-item up1">
+      <div class="plan-head"><span class="plan-name">技術・家庭　3 → 4</span><span class="plan-goal">知識Bだけ、あと少し</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>知識Bだけ</b>／ 思考・態度はすでにA</p>
+      <p class="plan-do">
+        ・用語プリント・ペーパーテスト対策を <b>試験1週間前から</b><br>
+        ・作品／レポートは <b>期限より前</b> に提出<br>
+        ・プリント忘れゼロを合言葉に
+      </p>
+    </div>
+
+    <div class="plan-item top">
+      <div class="plan-head"><span class="plan-name">英語　4 → 5</span><span class="plan-goal">AAAの帯を90%超えへ</span></div>
+      <p class="plan-obs">▶ 弱いのは：<b>特になし。全観点80台後半</b> → もう一歩で5</p>
+      <p class="plan-do">
+        ・定期テストで <b>95点以上</b> ねらい（1学期91点はすでにすごい）<br>
+        ・音読課題は毎日 <b>録音してチェック</b><br>
+        ・スピーチ課題は暗記まで <b>家でセルフリハーサル</b>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 恥ずかしがり屋作戦 ============ -->
+  <section>
+    <div class="sec-head"><h2>手を挙げなくても 態度Aを取る 7つの道</h2><span class="en">SHY STRATEGY</span></div>
+    <p class="sec-note">▶ 「発言しないと評価されない」は昔の話。今の中学は <b>「静かな努力の見える化」</b> でちゃんと評価してくれる。</p>
+
+    <ol class="shy-list">
+      <li data-n="1"><b>提出物は「期限より前」に出す</b>：もっとも客観的で、誰にも文句を言わせない態度A材料。<em>忘れ物ゼロ・期限前提出</em>を合言葉に。</li>
+      <li data-n="2"><b>ノート・振り返りシートを丁寧に</b>：字がきれい・図が入る・自分の言葉でまとめる。<em>先生は必ず読んでいる</em>。</li>
+      <li data-n="3"><b>タブレット提出は積極的に</b>：ロイロノート・Google Classroom・Meta Moji などで <em>意見や質問を文字で送る</em>。恥ずかしがり屋の最強ルート。</li>
+      <li data-n="4"><b>小テストの直しをきちんと</b>：間違えた問題を <em>ノートに写して解き直し</em>。粘り強さの証拠になる。</li>
+      <li data-n="5"><b>休み時間の1質問</b>：週1回でOK。<em>「これ分からなかったんですけど…」</em>と先生のところへ。授業中の発言より効く。</li>
+      <li data-n="6"><b>ペア・グループワークで役割をとる</b>：<em>書記・記録係・タイムキーパー</em>など、話さなくても評価対象になる係を選ぶ。</li>
+      <li data-n="7"><b>係活動・委員会を頑張る</b>：国語係の仕事を <em>先生から言われる前に</em> やる。学級活動の記録に残る。</li>
+    </ol>
+
+    <div class="pixel-card green" style="margin-top:14px">
+      <p style="font-family:'DotGothic16',monospace;font-size:12.5px;line-height:1.9;color:var(--kink)">
+        ▶ 恥ずかしがり屋なのは <b style="color:var(--kyellow)">「じっくり考える力がある」</b> のうらがえし。<br>
+        大声で発言する子より、<b style="color:var(--kpink)">深く考えている子</b> のほうが、社会に出てからずっと強い。<br>
+        今の内申制度は、静かなタイプでも <b style="color:var(--kyellow)">努力の跡を見せれば</b> ちゃんと評価される仕組みになっているよ。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 2学期以降の7つの習慣 ============ -->
+  <section>
+    <div class="sec-head"><h2>2学期からの 7つの習慣</h2><span class="en">HABITS</span></div>
+    <p class="sec-note">▶ 「点数を10点あげる」より、この7つのほうが内申は伸びる。</p>
+    <ol class="habits">
+      <li data-n="1"><b>提出物は期限"前"提出</b>を合言葉に</li>
+      <li data-n="2"><b>ノート・振り返り</b>に「学んだこと＋疑問」を1行加える</li>
+      <li data-n="3"><b>小テスト100点</b>を目指す。取れなかった問題は必ず解き直し</li>
+      <li data-n="4"><b>週1回、先生に質問</b>する（休み時間・放課後でOK）</li>
+      <li data-n="5"><b>家庭学習：5教科×15分＋実技×週2</b>のリズムを固定</li>
+      <li data-n="6"><b>実技課題は家で録画・写真</b>で自己チェックしてから提出</li>
+      <li data-n="7"><b>間違いノート</b>を1冊作る（テスト直前の最強アイテムになる）</li>
+    </ol>
+  </section>
+
+  <!-- ============ 都立ロードマップ ============ -->
+  <section>
+    <div class="sec-head"><h2>都立高校までのロードマップ</h2><span class="en">ROADMAP</span></div>
+    <p class="sec-note">▶ 都立高校の内申は <b>「中3の2学期評定」</b>が使われる。中1の今から布石を打つと3年後がラク。</p>
+
+    <div class="roadmap">
+      <div class="rm-row now">
+        <div class="rm-when">中1<br>1学期<br>（今）</div>
+        <div class="rm-what">
+          評定 <span class="num">32/45</span> ／ 換算内申 <span class="num">46/65</span><br>
+          <b>▶ 「1つずつBをAに変える」</b> を意識するだけでOK
+        </div>
+      </div>
+      <div class="rm-row now">
+        <div class="rm-when">中1<br>2学期</div>
+        <div class="rm-what">
+          目標：評定 <span class="num">35+</span> ／ Bの観点を <b>3つ減らす</b><br>
+          <b>▶ 提出物・振り返り・小テスト</b> の3点を徹底
+        </div>
+      </div>
+      <div class="rm-row mid">
+        <div class="rm-when">中1<br>3学期</div>
+        <div class="rm-what">
+          目標：評定 <span class="num">37+</span> ／ 年度成績で <b>4以上を6教科</b><br>
+          <b>▶ 音楽・技家</b> の底上げがカギ
+        </div>
+      </div>
+      <div class="rm-row mid">
+        <div class="rm-when">中2<br>通年</div>
+        <div class="rm-what">
+          目標：評定 <span class="num">38〜40</span> を安定させる<br>
+          <b>▶ 中2の評定は高校の受験相談で参考にされる</b>。ここを落とさない
+        </div>
+      </div>
+      <div class="rm-row goal">
+        <div class="rm-when">中3<br>1学期</div>
+        <div class="rm-what">
+          目標：評定 <span class="num">40+</span> ／ 換算内申 <span class="num">55+</span><br>
+          <b>▶ 志望校を3〜5校しぼる</b>。夏の学校説明会に参加
+        </div>
+      </div>
+      <div class="rm-row goal">
+        <div class="rm-when">中3<br>2学期<br>（決戦）</div>
+        <div class="rm-what">
+          <b>▶ 都立入試で使われる評定はここ！</b><br>
+          進学指導推進校（新宿・駒場ほか）ライン：換算内申 <span class="num">55〜60</span><br>
+          中堅上位（北園・目黒・広尾）ライン：換算内申 <span class="num">46〜52</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ モチベーション ============ -->
+  <section>
+    <div class="moti">
+      <h2>★ さらへ ★</h2>
+      <p>
+        まず、<b>71日ぜんぶ出席</b>。遅刻もゼロ、早退もゼロ。これは通知表の中でいちばん大事な <em>「土台」</em>。この土台があるから、点数の話ができるんだよ。すごいことだからね。
+      </p>
+      <p>
+        <b>3観点ぜんぶAなのに評定が4</b> —— これはね、悪いんじゃなくて <em>「5まであと数点」</em> という意味。CでもBでもない、<b>頂上のすぐ下</b> にいるってこと。美術も英語も、この「あと少し」の位置にいるさらは本当にがんばってる。
+      </p>
+      <p>
+        <b>手を挙げるのがはずかしい</b>のは、ぜんぜん弱点じゃない。じっくり考えているからこそ、すぐには声にできないだけ。<em>「静かに考える力」</em> は大人になってから何倍にも化けるチカラだよ。
+      </p>
+      <p>
+        いまの評定の仕組みは、大声じゃなくて <b>ノート・振り返り・提出物・タブレット・小テスト</b> でも同じくらい評価してくれるようにできてる。数学と技家で <em>「態度A」</em> をもう取れていることが、なによりの証拠。<b>さらは、さらのやり方で、ちゃんとAを取れる子</b>。
+      </p>
+      <p>
+        女子59人中で <em>上位12%</em> にいて、9教科ぜんぶ学年平均を超えている中学生は、そんなに多くない。この <b>「穴のなさ」</b> が、3年後の都立入試でいちばん効いてくるからね。
+      </p>
+      <p>
+        次の2学期は、点数を追いかけなくていい。<b>「Bをひとつ減らす」</b> だけを目標に。1つ減らせたら、それだけで大成功。焦らずに、いっしょに3年間積み上げていこう🌱
+      </p>
+      <p class="sig">— ママより、クロード分析つき</p>
+    </div>
+  </section>
+
+  <p class="foot">
+    ※ 換算内申・都立高校ラインは <b>2026年度時点の目安</b> です。<br>
+    実際の入試制度・ボーダーは志望校決定時に最新情報を確認してください。<br>
+    ※ 観点別評価・評定の達成度％は通知表裏面の基準に基づく。
+  </p>
+
+  <div class="back-bottom">
+    <a class="back-link" href="../index.html">← TOPにもどる</a>
+  </div>
+
+</div>
+</body>
+</html>
